@@ -1,8 +1,10 @@
 
-import React from 'react';
 import ReactDom from 'react-dom';
 
-import { Navigation } from "./Navigation";
+import { App } from './app.component';
+
+
+/*import { Date } from "./date";*/
 
 /*const paint = () => {
     const time = React.createElement('time', null, ` Time is ${new Date().toLocaleTimeString()}`);
@@ -24,11 +26,6 @@ const Navigation = () => (
 );
 */
 
-const Component = (
-    <div>
-    <h1>Hello, react easycode</h1>
-    <Navigation />
-    </div>
-);
 
-ReactDom.render(Component, document.getElementById('app'));
+
+ReactDom.render(App, document.getElementById('app'));
