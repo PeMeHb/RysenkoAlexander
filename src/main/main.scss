@@ -1,4 +1,15 @@
+@import "../variables";
+@import "../mixins";
 
 .main {
-background-color: bisque;
+  display: flex;
+  flex: 1 0 auto;
+  background-color: $main-bg;
+
+  &__wrapper {
+    @include wrapper();
+    display: flex;
+    justify-content: space-between;
+  }
+
 }

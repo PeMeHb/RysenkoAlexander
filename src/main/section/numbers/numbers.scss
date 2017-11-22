@@ -1,0 +1,18 @@
+@import "../../../variables";
+
+.numbers__list {
+  display: flex;
+  flex-direction: column;
+  padding-left: 40px;
+  list-style: circle;
+
+  &-item {
+    font-size: 1.1rem;
+    color: #333333;
+    margin-bottom: 10px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+}

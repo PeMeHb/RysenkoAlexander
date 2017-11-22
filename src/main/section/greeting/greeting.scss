@@ -1,0 +1,13 @@
+@import "../../../variables";
+
+.greeting {
+  text-align: center;
+
+  &__text {
+    display: inline-block;
+    font-size: 1.1rem;
+    color: #c64f50;
+    margin-bottom: 20px;
+  }
+
+}

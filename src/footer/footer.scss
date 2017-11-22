@@ -1,4 +1,19 @@
+@import "../variables";
+@import "../mixins";
 
 .footer {
-background-color: aqua;
+  background-color: $footer-bg;
+
+  &__wrapper {
+    @include wrapper();
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50px;
+  }
+
+  &__info {
+    color: $color-white;
+  }
+
 }

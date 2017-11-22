@@ -4,8 +4,10 @@ import { Header } from "./header";
 import { Main } from "./main";
 import { Footer } from "./footer";
 
+import './app.scss'
+
 export const App = (
-    <div>
+    <div className='container'>
         <Header />
         <Main />
         <Footer />
