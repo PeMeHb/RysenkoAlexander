@@ -1,0 +1,46 @@
+@import "../../../variables";
+
+.section {
+
+  &__users-box {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    .section__button {
+      align-self: flex-start;
+      margin-bottom: 20px;
+    }
+  }
+
+  &__users-wrap {
+    display: flex;
+  }
+
+  &__users-list {
+    min-width: 200px;
+    padding-top: 40px;
+    margin-right: 100px;
+  }
+
+  &__users {
+    cursor: pointer;
+    margin-bottom: 5px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__users-title {
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  &__users-posts {
+    list-style: disc;
+    margin-bottom: 5px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+}
