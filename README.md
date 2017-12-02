@@ -19,3 +19,4 @@ npm i
 npm start
 ```
 3. Then open *dist/index.html* to run application
+
