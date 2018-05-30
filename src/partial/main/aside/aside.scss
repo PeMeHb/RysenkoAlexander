@@ -1,0 +1,28 @@
+@import "../../../variables";
+
+.aside {
+  flex-basis: 20%;
+  background-color: $aside-bg;
+  border-radius: 5px;
+  padding: 40px 20px;
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: disc;
+  }
+
+  &__list-item {
+    margin-bottom: 30px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__list-link {
+    display: inline-block;
+    min-width: 110px;
+  }
+
+}
