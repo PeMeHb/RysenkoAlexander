@@ -5,7 +5,7 @@ const textPlugin = require('extract-text-webpack-plugin');
 const args = require('yargs').argv;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-let styleLoader = ['style-loader', 'css-loader', 'sass-loader'];
+const styleLoader = ['style-loader', 'css-loader', 'sass-loader'];
 
 const images = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
 
@@ -26,7 +26,8 @@ const plugins = [
     Component: ['react', 'Component']
   }),
   new CopyWebpackPlugin([
-    ...images.map(ext => ({ from: `**/*/*.${ext}`, to: 'images/[name].[ext]' }))
+    ...images.map(ext => ({ from: `**/*/*.${ext}`, to: 'images/[name].[ext]' })),
+    { from: 'assets', to: 'assets' }
   ])
 ];
 
@@ -63,7 +64,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['env', 'react'],
+            presets: ['@babel/preset-env', '@babel/react'],
             plugins: ['transform-class-properties']
           }
         }
@@ -73,15 +74,33 @@ module.exports = {
         use: textPlugin.extract({
           fallback: 'style-loader',
           use: [
-            'css-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true
+              }
+            },
             {
               loader: 'sass-loader',
               options: {
-                includePaths: ['src']
+                includePaths: ['src'],
+                sourceMap: true
               }
             }
           ]
         })
+      },
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              name: '[name].[ext]',
+              limit: 100
+            }
+          }
+        ]
       }
     ],
   },
@@ -93,6 +112,7 @@ module.exports = {
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
     publicPath: '/',
-    port: 9000
+    port: 9001,
+    historyApiFallback: true
   }
 };

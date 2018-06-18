@@ -1,3 +1,6 @@
+@import "./variables";
+
+
 // block inner wrapper
 @mixin wrapper($width: 1170px) {
   box-sizing: border-box;

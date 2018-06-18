@@ -5,7 +5,6 @@
   display: flex;
   flex: 1 0 auto;
   background-color: $main-bg;
-
   &__wrapper {
     @include wrapper();
     display: flex;
