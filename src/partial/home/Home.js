@@ -1,3 +1,4 @@
+import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import './home.scss';
@@ -31,20 +32,16 @@ export class Home extends Component {
           type="button"
           value="Add"
         />
-        <ul>
-          <ReactCSSTransitionGroup
-            transitionName="anim"
-            transitionAppear={false}
-            transitionEnterTimeout={500}
-            transitionEnter
-            transitionLeave={false}
-          >
-            {
-                            this.state.data.map(player => <li key={player.id}>{player.name}</li>)
-                        }
-          </ReactCSSTransitionGroup>
-        </ul>
-
+        <ReactCSSTransitionGroup
+          component="ul"
+          transitionName="anim"
+          transitionAppear={false}
+          transitionEnterTimeout={500}
+          transitionEnter
+          transitionLeave={false}
+        >
+          { this.state.data.map(player => <li key={player.id}>{player.name}</li>) }
+        </ReactCSSTransitionGroup>
       </div>
     );
   }

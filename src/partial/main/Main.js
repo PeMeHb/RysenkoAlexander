@@ -1,20 +1,21 @@
+import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import { Roster } from '../roster';
 import { Home } from '../home';
-import { Buttons } from '../button';
-
+import { Year } from '../year';
 
 import './main.scss';
 
-export const Main = props => (
+
+export const Main = () => (
   <main className="main">
     <div className="main__wrapper">
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/roster" component={Roster} />
+        <Route path="/year" component={Year} />
       </Switch>
-      <Buttons update={props.dispatch} />
     </div>
   </main>
 );

@@ -1,6 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-
 
 import { Header } from './partial/header';
 import { Main } from './partial/main';
@@ -8,7 +6,7 @@ import { Footer } from './partial/footer';
 
 import './app.scss';
 
-export const AppComponent = () => (
+export const App = () => (
   <div className="container">
     <Header />
     <Main />
@@ -16,9 +14,3 @@ export const AppComponent = () => (
   </div>
 );
 
-const mapStateToProps = state => ({
-  todo: state.todo,
-  date: state.date
-});
-
-export const App = connect(mapStateToProps)(AppComponent);
