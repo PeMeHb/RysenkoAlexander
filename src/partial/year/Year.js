@@ -14,14 +14,14 @@ export const YearDate = props => (
     <InfoYear date={props.date} />&nbsp;
     <ClassToggle
       update={props.dispatch}
-      clasName={props}
+      classInit=""
     />
   </React.Fragment>
 );
 
 const mapStateToProps = state => ({
   date: state.date,
-  className: state.className,
+  classInit: state.className,
 });
 
 export const Year = connect(mapStateToProps)(YearDate);

@@ -30,7 +30,10 @@ export const toggle = (state = [], action) => {
 /* buttonClass: this.state.classActive ? 'active' : '',
    buttonText: this.state.classActive ? 'Hide' : 'Show', */
 
+
 /*
+
+import { ADD_TASK, REMOVE_TASK, SET_USER, SET_INFO } from './actions';
 
 export const todo = (state = [], action) => {
   switch (action.type) {
@@ -41,8 +44,6 @@ export const todo = (state = [], action) => {
   }
   return state;
 };
-
-import { ADD_TASK, REMOVE_TASK, SET_USER, SET_INFO } from './actions';
 
 export const tasks = (state = [], action) => {
   switch (action.type) {

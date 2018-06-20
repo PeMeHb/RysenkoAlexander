@@ -3,12 +3,15 @@ import React from 'react';
 import { classToggle } from '../store/actions';
 
 import './class.scss';
+import { connect } from 'react-redux';
 
 
-export const ClassToggle = ({ update, clasName }) => {
+export const ClassToggle = ({ update, classInit }) => {
   const click = () => {
-    console.log(clasName);
-    update(classToggle());
+    if (!classInit) {
+      update(classToggle());
+    }
+    console.log(classInit);
   };
 
   return (
@@ -22,5 +25,16 @@ export const ClassToggle = ({ update, clasName }) => {
     <Buttons update={props.dispatch} />&nbsp;
     <InfoYear date={props.date} />
   </React.Fragment>
-); */
+);
+
+const mapDispatchToProps = dispatch => ({
+  updateDate(add) {
+    dispatch(add ? incYear() : decYear());
+  },
+  updateTodo(value) {
+    dispatch(addTodo(value));
+  }
+});
+
+export const App = connect(mapStateToProps, mapDispatchToProps)(AppComponent); */
 
