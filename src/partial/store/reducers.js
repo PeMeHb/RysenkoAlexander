@@ -1,5 +1,5 @@
 
-import { INCREASE_YEAR, DECREASE_YEAR, TOGGLE_CLASS } from './actions';
+import { INCREASE_YEAR, DECREASE_YEAR, TOGGLE_CLASS, ADD_TASK, REMOVE_TASK } from './actions';
 
 // it is typical reducer
 // action should be an object with next pattern:
@@ -27,9 +27,28 @@ export const toggle = (state = [], action) => {
 };
 
 
+export const tasks = (state = [], action) => {
+  switch (action.type) {
+    case ADD_TASK: {
+      console.log(...action.task);
+      return [...state, ...action.task];
+    }
+    case REMOVE_TASK: {
+      const { id, index } = action.task;
+      const tasks = state[id];
+      const newtasks = tasks.filter((el, number) => number !== index);
+      state[id] = newtasks;
+
+      return [...state];
+    }
+  }
+
+  return state;
+};
+
+
 /* buttonClass: this.state.classActive ? 'active' : '',
    buttonText: this.state.classActive ? 'Hide' : 'Show', */
-
 
 /*
 

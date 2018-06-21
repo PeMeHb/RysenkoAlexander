@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import { Roster } from '../roster';
 import { Home } from '../home';
 import { Year } from '../year';
+import { Todo } from '../todo';
 
 import './main.scss';
 
@@ -15,6 +16,7 @@ export const Main = () => (
         <Route exact path="/" component={Home} />
         <Route path="/roster" component={Roster} />
         <Route path="/year" component={Year} />
+        <Route path="/todo" component={Todo} />
       </Switch>
     </div>
   </main>

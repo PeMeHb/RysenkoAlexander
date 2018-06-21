@@ -7,6 +7,28 @@ export const decYear = () => ({ type: DECREASE_YEAR });
 export const TOGGLE_CLASS = 'Toggle class';
 export const classToggle = activeClass => ({ type: TOGGLE_CLASS, activeClass });
 
+export const ADD_TASK = 'Add new task';
+export const REMOVE_TASK = 'Remove task';
+export const addTodo = task => ({ type: ADD_TASK, task });
+export const removeTodo = task => ({ type: REMOVE_TASK, task });
+
+
+// Action Creators
+/*
+let nextTodoId = 0;
+const addTodo = task => ({
+  type: 'ADD_TODO',
+  id: nextTodoId++,
+  task
+});
+let nextAuthorId = 0;
+const addAuthor = (name, role) => ({
+  type: 'ADD_AUTHOR',
+  id: nextAuthorId++,
+  name,
+  role,
+});
+*/
 
 /*
 export const ADD_TASK = 'Add new task';
