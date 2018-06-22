@@ -31,6 +31,7 @@
     "jsx-a11y/no-noninteractive-element-interactions": 0,
     "jsx-a11y/click-events-have-key-events": 0,
     "jsx-a11y/anchor-is-valid": false,
+    "jsx-quotes": ["error", "prefer-double"],
     "import/prefer-default-export": 0,
     "default-case": 0,
     "no-shadow": 0,

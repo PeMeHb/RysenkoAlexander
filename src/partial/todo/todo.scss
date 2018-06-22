@@ -1,2 +1,11 @@
 @import "../../variables";
+@import "../../mixins";
 
+.add_item-enter {
+  opacity: 0.01;
+}
+
+.add_item-enter.add_item-enter-active {
+  opacity: 2;
+  transition: opacity 0.5s ease-in;
+}

@@ -30,11 +30,12 @@ export const toggle = (state = [], action) => {
 export const tasks = (state = [], action) => {
   switch (action.type) {
     case ADD_TASK: {
-      console.log(...action.task);
-      return [...state, ...action.task];
+      const newState = [...state, action.task];
+      console.log(...state);
+      return newState;
     }
     case REMOVE_TASK: {
-      const { id, index } = action.task;
+      const { id, index } = action;
       const tasks = state[id];
       const newtasks = tasks.filter((el, number) => number !== index);
       state[id] = newtasks;

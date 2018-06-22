@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux';
 
 import { addTodo, removeTodo } from '../store/actions';
@@ -7,24 +8,35 @@ import './todo.scss';
 
 
 export const TodoApp = (props) => {
+  let id = 0;
+  const task = 'Walk dog';
   const click = () => {
-    props.dispatch(addTodo(1, 'Walk dog'));
+    console.log(props);
+    props.dispatch(addTodo(id++, task));
   };
 
   return (
     <React.Fragment>
       <button onClick={() => click()}>Add todo</button>&nbsp;
-      <button onClick={() => removeTodo(1, 'Walk dog')}>Remove todo</button>
+      <button onClick={() => removeTodo(1, 'Walk dog')}>Remove todo</button>&nbsp;
+      <ReactCSSTransitionGroup
+        component="ul"
+        transitionName="add_item"
+        transitionAppear={false}
+        transitionEnterTimeout={500}
+        transitionEnter
+        transitionLeave={false}
+      >
+{/* { this.state.map(task => <li key={task.id}>{task.task}</li>) } */}
+      </ReactCSSTransitionGroup>
     </React.Fragment>
   );
 };
 
 const mapStateToProps = state => ({
-  task: state.task,
+  tasks: state.tasks,
+  id: state.id
 });
-
-
-{ /* <button onClick="dispatch(addTodo('Walk dog'))">Add Walk Dog Todo</button> */ }
 
 
 /*

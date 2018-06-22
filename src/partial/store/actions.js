@@ -9,7 +9,11 @@ export const classToggle = activeClass => ({ type: TOGGLE_CLASS, activeClass });
 
 export const ADD_TASK = 'Add new task';
 export const REMOVE_TASK = 'Remove task';
-export const addTodo = task => ({ type: ADD_TASK, task });
+export const addTodo = (id, task) => ({
+  type: ADD_TASK,
+  id,
+  task
+});
 export const removeTodo = task => ({ type: REMOVE_TASK, task });
 
 
