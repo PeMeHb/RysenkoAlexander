@@ -1,0 +1,24 @@
+@import "variables";
+
+body {
+  background: $main-bg;
+  margin: 0;
+}
+
+#app {
+  display: grid;
+  grid-template-rows: 100px 1fr 100px;
+  min-height: 100vh;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.main {
+  max-width: 837px;
+  margin: 0 auto;
+  background: rgba(46, 63, 149, .7);
+  padding: 15px;
+  color: $main-color;
+  width: 90vw;
+  box-sizing: border-box;
+}
