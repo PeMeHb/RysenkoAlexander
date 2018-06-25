@@ -1,8 +1,0 @@
-// block inner wrapper
-@mixin wrapper($width: 1170px) {
-  box-sizing: border-box;
-  width: 100%;
-  max-width: $width;
-  margin: 0 auto;
-  padding: $common-padding;
-}
