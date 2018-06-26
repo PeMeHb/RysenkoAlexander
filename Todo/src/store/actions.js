@@ -8,3 +8,6 @@ export const setUser = payload => ({ type: SET_USER, payload });
 
 export const SET_INFO = 'Set tasks info';
 export const setInfo = payload => ({ type: SET_INFO, payload });
+
+export const ADD_GAME = 'Add new game';
+export const addGame = payload => ({ type: ADD_GAME, payload });

@@ -1,4 +1,4 @@
-import { ADD_TASK, REMOVE_TASK, SET_USER, SET_INFO } from './actions';
+import { ADD_TASK, REMOVE_TASK, SET_USER, SET_INFO, ADD_GAME } from './actions';
 
 export const tasks = (state = [], action) => {
   switch (action.type) {
@@ -31,6 +31,16 @@ export const user = (state = null, action) => {
 export const info = (state = null, action) => {
   switch (action.type) {
     case SET_INFO: {
+      return action.payload;
+    }
+  }
+
+  return state;
+};
+
+export const gameCount = (state = null, action) => {
+  switch (action.type) {
+    case ADD_GAME: {
       return action.payload;
     }
   }

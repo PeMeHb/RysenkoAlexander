@@ -1,35 +1,50 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { checkUser, login } from '../../services/userService';
-import { setUser } from '../../store';
+import { connect } from "react-redux";
+
+import { createCount, updateCount, getCount } from '../../services/gameService';
+import { addGame } from '../../store';
 
 import './game.scss';
-import { connect } from "react-redux";
 
 
 export class GameMod extends Component {
   constructor(props) {
     super(props);
+/*    this.state = {
+      user2: ''
+    }; */
   }
 
+
+
+  componentDidMount() {
+    const { gameCount } = this.props;
+    console.log(gameCount);
+
+/*    getCount(gameCount)
+      .then(gameCount => this.setState(Object.assign({}, gameCount)));*/
+  }
 
   render() {
     const { user } = this.props;
     return (
         <section className="section">
-          <h2 className="section__title">{user.firstName || 'Name'}</h2>
+          <h2 className="section__title">{user.firstName}</h2>
         </section>
 
     );
   }
 }
 
-const mapState = ({ user }) => ({
-  user
+const mapState = ({ user, gameCount }) => ({
+  user,
+  gameCount
 });
 
+
 const mapDispatch = {
-  setUser
+  addGame
 };
 
 export const Game = withRouter(connect(mapState, mapDispatch)(GameMod));
