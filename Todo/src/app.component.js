@@ -24,14 +24,12 @@ export class AppComponent extends Component {
 
   render() {
     const { user } = this.props;
-
     return (
       <React.Fragment>
         <Header
           user={user}
           setLoginState={this.setLoginState}
         />
-
         <main className="main">
           {
             user !== null ?
