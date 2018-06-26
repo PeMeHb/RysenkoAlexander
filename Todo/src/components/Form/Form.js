@@ -21,7 +21,7 @@ export class Form extends Component {
   handleField = (event) => {
     const { target } = event;
     this.setState({ [target.name]: { value: target.value } });
-  }
+  };
 
   setFieldState(e, index) {
     const field = this.fields[index];
@@ -67,7 +67,7 @@ export class Form extends Component {
 
     this.props.submit(data);
     e.preventDefault();
-  }
+  };
 
   static getValidClass(error) {
     if (error) {

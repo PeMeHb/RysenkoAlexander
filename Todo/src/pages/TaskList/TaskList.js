@@ -1,8 +1,10 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Tabs, Tablink, Tab, TabContent } from 'components/Tabs/index';
-import { getTasks, updateTask, removeTask } from 'services/tasksService';
-import { addTodo, removeTodo } from 'store';
+
+import { Tabs, Tablink, Tab, TabContent } from '../../components/Tabs/index';
+import { getTasks, updateTask, removeTask } from '../../services/tasksService';
+import { addTodo, removeTodo } from '../../store';
 
 import './tasklist.scss';
 
@@ -34,7 +36,7 @@ export class TaskListComponent extends Component {
       })
       /* eslint no-console: ["error", { allow: ["log"] }] */
       .catch(console.log);
-  }
+  };
 
   setTaskState = (task, doneState) => {
     // doneState: undefined | true | false
@@ -43,7 +45,7 @@ export class TaskListComponent extends Component {
       .then(() => this.setState({ tasks: [...this.state.tasks] }))
       /* eslint no-console: ["error", { allow: ["log"] }] */
       .catch(console.log);
-  }
+  };
 
   static getClassName(task) {
     if (task.done) {

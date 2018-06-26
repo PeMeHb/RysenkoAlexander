@@ -1,4 +1,6 @@
-import { updateTask, getTask, createTask } from 'services/tasksService';
+import React from 'react';
+
+import { updateTask, getTask, createTask } from '../../services/tasksService';
 
 export class Task extends Component {
   constructor(props) {
@@ -30,17 +32,17 @@ export class Task extends Component {
       promise = createTask(this.state);
     }
 
-    // after succec response redirect to tasks page
+    // after success response redirect to tasks page
     promise.then(() => this.props.history.push('/tasks'));
 
     event.preventDefault();
-  }
+  };
 
   onChange = (event) => {
     const { target } = event;
 
     this.setState({ [target.name]: target.value });
-  }
+  };
 
   render() {
     const { title, description } = this.state;
@@ -56,18 +58,21 @@ export class Task extends Component {
           onChange={this.onChange}
           placeholder="Enter a title"
         />
+
         <br />
         <br />
+
         <textarea
           name="description"
           cols="30"
           rows="10"
           value={description}
           onChange={this.onChange}
-        ></textarea>
+        />
 
         <br />
         <br />
+
         <input
           type="submit"
           value="Save"

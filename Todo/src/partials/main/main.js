@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactModal from 'react-modal';
 import { connect } from 'react-redux';
-import { getTasksInfo } from 'services/tasksService';
-import { setInfo } from 'store';
+
+import { getTasksInfo } from '../../services/tasksService';
+import { setInfo } from '../../store';
+
 import './main.scss';
 
-export class MainComponent extends React.Component {
+export class MainComponent extends Component {
   constructor() {
     super();
     this.state = {

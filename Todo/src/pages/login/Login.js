@@ -1,5 +1,7 @@
-import { Form } from 'components/Form';
-import { login } from 'services/userService';
+import React from 'react';
+
+import { Form } from '../../components/Form';
+import { login } from '../../services/userService';
 
 export const Login = (props) => {
   const loginUser = (data) => {

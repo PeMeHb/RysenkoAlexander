@@ -1,5 +1,7 @@
-import { Form } from 'components/Form';
-import { create } from 'services/userService';
+import React from 'react';
+
+import { Form } from '../../components/Form';
+import { create } from '../../services/userService';
 
 export const CreateUser = (props) => {
   const userHandler = (data) => {

@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Header } from 'partials/header';
-import { Pages } from 'pages';
-import { checkUser } from 'services/userService';
-import { setUser } from 'store';
+
+import { Header } from './partials/header';
+import { Pages } from './pages';
+import { checkUser } from './services/userService';
+import { setUser } from './store';
+
 import './app.scss';
 
 export class AppComponent extends Component {

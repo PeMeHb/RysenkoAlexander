@@ -6,7 +6,8 @@ const items = [
   { label: 'Home', id: 'home' },
   { label: 'Tasks', id: 'tasks', auth: true },
   { label: 'User', id: 'user' },
-  { label: 'Register new', id: 'registernew', nonauth: true }
+  { label: 'Register new', id: 'registernew', nonauth: true },
+  { label: 'Game', id: 'game'}
 ];
 
 export const Navigation = ({ user }) => {
