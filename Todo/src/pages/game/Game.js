@@ -16,30 +16,41 @@ export class GameMod extends Component {
     }; */
   }
 
-
-
   componentDidMount() {
-    const { gameCount } = this.props;
-    console.log(gameCount);
+    getCount()
+        .then(data => console.log(data.counter))
+        .catch(() => resolve(null));
 
-/*    getCount(gameCount)
-      .then(gameCount => this.setState(Object.assign({}, gameCount)));*/
+/*      .then(data =>  {
+        data.responseJSON
+        console.log(data);
+        return data
+      })
+      .catch(() => resolve(null));*/
+
+
   }
 
+/*  setLoginState = (counter) => {
+    this.props.addGame(counter);
+  };*/
+
   render() {
-    const { user } = this.props;
+    const { user, counter } = this.props;
+/*    console.log(counter);*/
     return (
         <section className="section">
           <h2 className="section__title">{user.firstName}</h2>
+          <h2 className="section__title">{counter}</h2>
         </section>
 
     );
   }
 }
 
-const mapState = ({ user, gameCount }) => ({
+const mapState = ({ user, counter }) => ({
   user,
-  gameCount
+  counter
 });
 
 

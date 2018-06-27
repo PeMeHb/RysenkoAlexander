@@ -47,7 +47,7 @@ export class AppComponent extends Component {
 }
 
 const mapState = ({ user }) => ({
-  user
+  user,
 });
 
 const mapDispatch = {

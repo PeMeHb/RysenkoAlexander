@@ -1,36 +1,91 @@
 const Controller = require('./controller');
+const db = require('../db');
+
+
+
+
+class Game extends Controller {
+  constructor(name) {
+    super(name);
+
+    this.get = this.get.bind(this);
+  }
+
+
+  async get(ctx) {
+    const updatedUser = ctx.request.body;
+    const users = await this.getValue();
+
+    console.log(users, updatedUser);
+  }
+
+
+}
+
+module.exports = new Game('game');
+
+/*
 
 class Game extends Controller {
   constructor(name) {
     super(name);
 
     this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
   }
 
+  async create(ctx, next) {
+    const user = await this.findByField('email', ctx.request.body.email);
 
-  async update(ctx, next) {
-    const updatedItem = ctx.request.body;
-    const updatedItem2 = ctx.request.body.counter;
-
-    console.log(updatedItem, updatedItem2);
-
-
-    await super.update(ctx, next);
-  }
-
-
-
-/*  async create(ctx, next) {
-    const product = await this.findByField('title', ctx.request.body.title);
-
-    if (product) {
+    if (user) {
       ctx.status = 403;
-      ctx.body = { error: 'Not unique title' };
+      ctx.body = { error: 'Not unique email' };
     } else {
+      this.clearUser(ctx.request.body);
       await super.create(ctx, next);
     }
-  }*/
+  }
 
+  async update(ctx, next) {
+    const updatedUser = ctx.request.body;
+    const users = await this.getValue();
+    const user = users.find(usr => usr.email === updatedUser.email);
+
+    if (!user) {
+      ctx.status = 404;
+      ctx.body = { error: 'There is no user with such email' };
+      return;
+    }
+
+    delete updatedUser.email;
+
+    if (!updatedUser.password) {
+      delete updatedUser.password;
+    }
+
+    this.clearUser(updatedUser);
+
+    Object.assign(user, updatedUser);
+
+    const response = { ...user };
+    delete response.sid;
+    delete response.password;
+    ctx.body = await db.write(this.name, users, response);
+
+    await next();
+  }
+
+  clearUser(user = {}) {
+    Object.keys(user).forEach((key) => {
+      if (fields.indexOf(key) === -1) {
+        delete user[key];
+      }
+    });
+  }
 }
 
 module.exports = new Game('game');
+
+*/
+
+
