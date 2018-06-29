@@ -32,16 +32,16 @@ module.exports = (app) => {
   _.get('/users/:id', users.getById);
   _.post('/public/user', users.create);
   _.put('/user', users.update);
-/*  _.get('/game', game.get);*/
+  _.get('/game', game.getCounter);
+  _.get('/info', tasks.getInfo);
 
   createCommonRoutes({ routeController: tasks, name: 'tasks', allPrivate: true });
-  _.get('/info', tasks.getInfo);
 
   createCommonRoutes({ routeController: categories, name: 'categories' });
 
   createCommonRoutes({ routeController: products, name: 'products' });
 
-/*  createCommonRoutes({ routeController: game, name: 'game', allPrivate: true });*/
+  createCommonRoutes({ routeController: game, name: 'game' });
 
   app.use(_.routes());
 

@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Navigation } from 'partials/navigation/index';
-import { logout } from 'services/userService';
+
+import { Navigation } from '../../partials/navigation/index';
+import { logout } from '../../services/userService';
+
 import './header.scss';
 
 export const Header = ({ user, setLoginState }) => {

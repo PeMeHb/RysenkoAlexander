@@ -38,7 +38,7 @@ export const info = (state = null, action) => {
   return state;
 };
 
-export const gameCount = (state = null, action) => {
+export const gameCounter = (state = null, action) => {
   switch (action.type) {
     case ADD_GAME: {
       return action.payload;

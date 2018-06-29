@@ -2,57 +2,40 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 
-import { createCount, updateCount, getCount } from '../../services/gameService';
+import { createCount, updateCount, getCounter } from '../../services/gameService';
 import { addGame } from '../../store';
+import { PlayGround } from '../../pages/playGround'
 
 import './game.scss';
 
-
 export class GameMod extends Component {
-  constructor(props) {
-    super(props);
-/*    this.state = {
-      user2: ''
-    }; */
+  constructor() {
+    super();
   }
 
   componentDidMount() {
-    getCount()
-        .then(data => console.log(data.counter))
-        .catch(() => resolve(null));
-
-/*      .then(data =>  {
-        data.responseJSON
-        console.log(data);
-        return data
-      })
-      .catch(() => resolve(null));*/
-
-
+    getCounter()
+        .then(this.props.addGame);
   }
 
-/*  setLoginState = (counter) => {
-    this.props.addGame(counter);
-  };*/
-
   render() {
-    const { user, counter } = this.props;
-/*    console.log(counter);*/
+    const { user, gameCounter } = this.props;
     return (
-        <section className="section">
-          <h2 className="section__title">{user.firstName}</h2>
-          <h2 className="section__title">{counter}</h2>
-        </section>
+      gameCounter &&
+      <section className="section">
+        <h2 className="section__title">{user.firstName}</h2>
+        <h2 className="section__title">{gameCounter.counter}</h2>
+
+      </section>
 
     );
   }
 }
 
-const mapState = ({ user, counter }) => ({
+const mapState = ({ user, gameCounter }) => ({
   user,
-  counter
+  gameCounter
 });
-
 
 const mapDispatch = {
   addGame
