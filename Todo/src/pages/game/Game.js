@@ -20,12 +20,13 @@ export class GameMod extends Component {
 
   render() {
     const { user, gameCounter } = this.props;
+/*    console.log(user, gameCounter); */
     return (
       gameCounter &&
       <section className="section">
         <h2 className="section__title">{user.firstName}</h2>
         <h2 className="section__title">{gameCounter.counter}</h2>
-
+        <PlayGround user={user} gameCounter={gameCounter} />
       </section>
 
     );

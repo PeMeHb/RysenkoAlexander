@@ -15,6 +15,7 @@ class Game extends Controller {
       const user = gameData.find(item => item.sid && cookie === item.sid);
 
       if (user) {
+        delete user.sid;
         ctx.body = user;
       } else {
         ctx.status = 404;

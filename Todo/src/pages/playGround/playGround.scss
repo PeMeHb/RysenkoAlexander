@@ -1,21 +1,21 @@
-.tasks {
-  a {
-    text-decoration: none;
-    color: #fff;
+.playGround {
+  margin: 0 auto;
+
+  .ground {
+
+    max-width: 200px;
+    display: flex;
+    flex-wrap: wrap;
   }
 
-.done a {
-  text-decoration: line-through;
-}
-
-.progress a{
-  text-decoration: underline;
-}
-
-li {
-  span {
-    margin: 0 0 0 10px;
+  .cell {
     cursor: pointer;
+    flex-basis: 33%;
+    border: 1px solid #000;
+    box-sizing: border-box;
+    height: 60px;
+    background-color: #fff;
   }
+
 }
-}
+

@@ -40,7 +40,7 @@ export class Task extends Component {
 
   onChange = (event) => {
     const { target } = event;
-
+    console.log(target);
     this.setState({ [target.name]: target.value });
   };
 

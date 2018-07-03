@@ -56,18 +56,6 @@ const initPassport = (app) => {
     ctx.body = { data: 'ok' };
   }));
 
-/*  app.use(route.get('/game', async (ctx) => {
-
-    try {
-      const gameCounter = await db.get('game');
-      ctx.body = gameCounter;
-
-    } catch (e) {
-      console.log('Error get user', e);
-    }
-
-  }));*/
-
   app.use(async (ctx, next) => {
     const publicPath = ctx.url.includes('public') || ctx.url === '/';
 

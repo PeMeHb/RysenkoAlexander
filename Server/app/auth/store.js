@@ -10,16 +10,20 @@ class LocalStore {
     const users = await db.get('users');
     const user = users.find(usr => usr.sid === sid);
     const session = user && { passport: { user: user.id } } || false;
-
     return session;
   }
 
   async set(session, { sid = this.getID(24), maxAge = 1000000 } = {}, ctx) {
     try {
       const users = await db.get('users');
+      const usersGame = await db.get('game');
       const user = users.find(item => session.passport && item.id === session.passport.user);
+      const userGame = usersGame.find(item => session.passport && item.id === session.passport.user);
       user.sid = sid;
+      userGame.sid = sid;
       await db.write('users', users, user);
+      await db.write('game', usersGame, userGame);
+      console.log(userGame, user);
     } catch (e) {
       console.log('Error set user sid', e);
     }
