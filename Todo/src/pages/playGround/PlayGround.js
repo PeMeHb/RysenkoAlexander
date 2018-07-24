@@ -50,34 +50,7 @@ export class PlayGround extends Component {
         middle = (length - 1) / 2,
         compSign = "O";
 
-
-/*    if (!this.state.isComputer) return; */
-
-/*    for (let i = 0; i < length; i++) {
-
-      console.log(squares[i]);
-    }*/
-
     this.calculateWinner(squares);
-
-
-/*    const lines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
-    for (let i = 0; i < lines.length; i++) {
-      const [a, b, c] = lines[i];
-      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-        console.log(squares[a]);
-        return squares[a];
-      }
-    }*/
 
 
     if (!squares[middle]) {
@@ -101,31 +74,12 @@ export class PlayGround extends Component {
       [2, 4, 6],
     ];
 
-/*
-    for (let i = 0; i < lines.length; i++) {
-      console.log(lines[i]);
-      console.log(squares);
-
-    switch (lines[i]) {
-
-      case [0, 1, 2]:
-
-        console.log("0 - line");
-        break;
-
-      case [0, 3, 6]:
-        console.log("3 - line");
-        break;
-    }
-
-    }
-*/
-
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
-
-      if (squares[a] && squares[a] === squares[b] ) {
-        console.log(squares[a]);
+      console.log([a, b, c] = lines[i]);
+      // console.log(squares[i], squares[b], squares[c]);
+      if (squares[a] === squares[b] || squares[a] === squares[c]) {
+        console.log("a = b" + squares[a] === squares[b] + '\n' + "a = c" + squares[a] === squares[c]);
         return squares[a];
       }
     }
@@ -170,3 +124,49 @@ export class PlayGround extends Component {
     );
   }
 }
+
+
+/*
+    for (let i = 0; i < lines.length; i++) {
+      console.log(lines[i]);
+      console.log(squares);
+
+    switch (lines[i]) {
+
+      case [0, 1, 2]:
+
+        console.log("0 - line");
+        break;
+
+      case [0, 3, 6]:
+        console.log("3 - line");
+        break;
+    }
+
+    }
+*/
+
+
+/*    if (!this.state.isComputer) return; */
+
+/*    for (let i = 0; i < length; i++) {
+      console.log(squares[i]);
+    }*/
+
+/*    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        console.log(squares[a]);
+        return squares[a];
+      }
+    }*/
