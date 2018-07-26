@@ -76,12 +76,26 @@ export class PlayGround extends Component {
 
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
-      console.log([a, b, c] = lines[i]);
-      // console.log(squares[i], squares[b], squares[c]);
-      if (squares[a] === squares[b] || squares[a] === squares[c]) {
-        console.log("a = b" + squares[a] === squares[b] + '\n' + "a = c" + squares[a] === squares[c]);
-        return squares[a];
+      // console.log([a, b, c] = lines[i]);
+      // console.log(squares[a], squares[b], squares[c], i, lines.length );
+      // console.log(squares[i]);
+      //  if (squares[a] === squares[b] || squares[a] === squares[c] || squares[b] === squares[c]) {
+      //    console.log("a = b" + squares[a] === squares[b] + '\n' + "a = c" + squares[a] === squares[c]);
+      //
+      //  }
+      if (squares[a] && squares[a] === squares[b] && !squares[c]) {
+        console.log("1");
+        squares[c] = "O";
       }
+      if (squares[a] && squares[a] === squares[c] && !squares[b]) {
+        console.log("2");
+        squares[b] = "O";
+      }
+      if (squares[b] && squares[b] === squares[c] && !squares[a]) {
+        console.log("3");
+        squares[a] = "O";
+      }
+
     }
 
   };
