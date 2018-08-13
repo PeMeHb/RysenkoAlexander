@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getCounter } from "../../services/gameService";
+import {getCounter} from "../../services/gameService";
 import {TaskList} from "../TaskList/TaskList";
 
 import './playGround.scss';
@@ -18,11 +18,11 @@ export class PlayGround extends Component {
 
   /* const squares = Object.assign({}, this.state.squares); */
 
-/*  handleField = (event) => {
-    const target = event.target;
-    this.setState({ [target.name]: { value: target.value } });
-    console.log(target.text);
-  }; */
+  /*  handleField = (event) => {
+      const target = event.target;
+      this.setState({ [target.name]: { value: target.value } });
+      console.log(target.text);
+    }; */
 
   /*   this.setState({
        squares: squares,
@@ -31,9 +31,9 @@ export class PlayGround extends Component {
 
   onClick = (event) => {
     const {squares, isComputer} = this.state,
-        playerSign = "X";
+      playerSign = "X";
 
-/*    console.log(isComputer); */
+    console.log(isComputer);
 
     if (isComputer) return;
     squares[event.target.id] = playerSign;
@@ -43,36 +43,52 @@ export class PlayGround extends Component {
 
   computer = () => {
 
-/*  const fl = (field) => this.setState(Object.assign({}, field)); */
+    const {squares, isComputer} = this.state;
 
-    const { squares } = this.state,
-        length = squares.length,
-        middle = (length - 1) / 2,
-        compSign = "O";
+    console.log(isComputer);
 
-    this.calculateWinner(squares);
+    this.computerIQ();
 
 
-    if (!squares[middle]) {
-      squares[middle] = compSign;
-      this.setSquares(squares)
-    }
+  };
+
+  randomCorner = () => {
+
+    const squares = this.state.squares.slice(),
+      corners = [0, 2, 6, 8];
+
+    let randomCorner = Math.floor(Math.random() * corners.length);
+
+    console.log(squares[corners[randomCorner]]);
+
+    squares[corners[randomCorner]] ? this.randomCorner() : squares[corners[randomCorner]] = "O";
+
+    this.setSquares(squares);
+
+    /*    if (!squares[corners[randomCorner]]) {
+
+        }
+        squares[corners[randomCorner]] = "O";*/
 
   };
 
 
+  computerIQ = () => {
+    const squares = this.state.squares.slice(),
+      length = squares.length,
+      middle = (length - 1) / 2,
+      compSign = "O",
+      lines = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+      ];
 
-  calculateWinner = (squares) => {
-    const lines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
 
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
@@ -84,27 +100,61 @@ export class PlayGround extends Component {
       //
       //  }
       if (squares[a] && squares[a] === squares[b] && !squares[c]) {
-        console.log("1");
+        console.log("1", squares);
+
         squares[c] = "O";
+        this.setSquares(squares);
+        return;
       }
       if (squares[a] && squares[a] === squares[c] && !squares[b]) {
-        console.log("2");
+        console.log("2", squares);
+
         squares[b] = "O";
+        this.setSquares(squares);
+        return;
       }
       if (squares[b] && squares[b] === squares[c] && !squares[a]) {
-        console.log("3");
+        console.log("3", squares);
+
         squares[a] = "O";
+        this.setSquares(squares);
+        return;
       }
 
     }
 
+    if (!squares[middle]) {
+      squares[middle] = compSign;
+      this.setSquares(squares);
+      return;
+    }
+
+    if (!squares[0] || !squares[2] || !squares[6] || !squares[8]) {
+      const corners = [0, 2, 6, 8];
+      let randomCorner = Math.floor(Math.random() * corners.length);
+
+      console.log(squares[corners[randomCorner]]);
+
+      squares[corners[randomCorner]] ? this.randomCorner() : squares[corners[randomCorner]] = "O";
+
+      this.setSquares(squares);
+
+    }
+
+
   };
 
+  playAgain = () => {
+    this.setState({
+      squares: Array(9).fill(null),
+      isComputer: false,
+    });
+  };
 
   setSquares = (squares) => {
     this.setState({
       squares: squares,
-      isComputer: this.state.isComputer ? false : this.state.isComputer,
+      isComputer: this.state.isComputer = !this.state.isComputer
     });
   };
 
@@ -115,25 +165,28 @@ export class PlayGround extends Component {
 
   render() {
 
-    const { squares } = this.state;
+    const {squares} = this.state;
 
-/*    const { user, gameCounter } = this.props;*/
+    /*    const { user, gameCounter } = this.props;*/
 
     return (
-        <div className="playGround">
-          <ul className="ground"> {
-            squares.map((box, boxIndex) => (
-                <li
-                    key={boxIndex}
-                    id={boxIndex}
-                    className="cell"
-                    onClick={this.onClick}
-                >
-                  {box}
-                </li>
-            ))}
-          </ul>
-        </div>
+      <div className="playGround">
+        <ul className="ground"> {
+          squares.map((box, boxIndex) => (
+            <li
+              key={boxIndex}
+              id={boxIndex}
+              className="cell"
+              onClick={this.onClick}
+            >
+              {box}
+            </li>
+          ))}
+        </ul>
+
+        <button className="butt" onClick={this.playAgain}>Play again</button>
+      </div>
+
 
     );
   }
@@ -184,3 +237,5 @@ export class PlayGround extends Component {
         return squares[a];
       }
     }*/
+
+/*  const fl = (field) => this.setState(Object.assign({}, field)); */

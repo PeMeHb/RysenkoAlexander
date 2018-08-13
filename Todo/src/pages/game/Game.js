@@ -24,7 +24,7 @@ export class GameMod extends Component {
     return (
       gameCounter &&
       <section className="section">
-        <h2 className="section__title">{user.firstName}</h2>
+        <h1 className="section__title">{user.firstName}</h1>
         <h2 className="section__title">{gameCounter.counter}</h2>
         <PlayGround user={user} gameCounter={gameCounter} />
       </section>
