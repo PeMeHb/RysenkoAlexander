@@ -161,6 +161,7 @@ export class PlayGround extends Component {
 
 
   playAgain = () => {
+    console.log(this.props.playerSign);
     this.setState({
       squares: Array(9).fill(null),
       isComputer: false,
@@ -187,6 +188,7 @@ export class PlayGround extends Component {
 
     return (
         <div className="playGround">
+
           <ul className="ground"> {
             squares.map((box, boxIndex) => (
                 <li

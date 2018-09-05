@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { createCount, updateCount, getCounter } from '../../services/gameService';
 import { addGame } from '../../store';
+import { ChooseSign } from '../../pages/chooseSign';
 import { PlayGround } from '../../pages/playGround'
 
 import './game.scss';
@@ -11,6 +12,13 @@ import './game.scss';
 export class GameMod extends Component {
   constructor() {
     super();
+    this.state = {
+      playerSign: null,
+    };
+  }
+
+  myCallback = (dataFromChild) => {
+    this.setState({ playerSign: dataFromChild });
   }
 
   componentDidMount() {
@@ -20,13 +28,14 @@ export class GameMod extends Component {
 
   render() {
     const { user, gameCounter } = this.props;
-/*    console.log(user, gameCounter); */
+
     return (
       gameCounter &&
       <section className="section">
         <h1 className="section__title">{user.firstName}</h1>
         <h2 className="section__title">{gameCounter.counter}</h2>
-        <PlayGround user={user} gameCounter={gameCounter} />
+        <ChooseSign playerSign={this.myCallback} />
+        <PlayGround user={user} gameCounter={gameCounter} playerSign={this.state.playerSign} />
       </section>
 
     );
