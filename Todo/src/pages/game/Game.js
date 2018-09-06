@@ -1,11 +1,11 @@
-import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { connect } from "react-redux";
+import React, {Component} from 'react';
+import {Link, withRouter} from 'react-router-dom';
+import {connect} from "react-redux";
 
-import { createCount, updateCount, getCounter } from '../../services/gameService';
-import { addGame } from '../../store';
-import { ChooseSign } from '../../pages/chooseSign';
-import { PlayGround } from '../../pages/playGround'
+import {createCount, updateCount, getCounter} from '../../services/gameService';
+import {addGame} from '../../store';
+import {ChooseSign} from '../../pages/chooseSign';
+import {PlayGround} from '../../pages/playGround'
 
 import './game.scss';
 
@@ -14,12 +14,23 @@ export class GameMod extends Component {
     super();
     this.state = {
       playerSign: null,
+      computerSign: null,
+      startGame: null,
     };
   }
 
-  myCallback = (dataFromChild) => {
-    this.setState({ playerSign: dataFromChild });
-  }
+  chooseSign = (dataFromChild) => {
+    this.setState({
+      playerSign: dataFromChild === "X" ? "X" : "O",
+      computerSign: dataFromChild === "X" ? "O" : "X",
+    });
+  };
+
+  startGame = (dataFromChild) => {
+    this.setState({
+      startGame: dataFromChild
+    });
+  };
 
   componentDidMount() {
     getCounter()
@@ -27,22 +38,23 @@ export class GameMod extends Component {
   }
 
   render() {
-    const { user, gameCounter } = this.props;
+    const { user, gameCounter } = this.props,
+          { playerSign, computerSign, startGame } = this.state;
 
     return (
-      gameCounter &&
-      <section className="section">
-        <h1 className="section__title">{user.firstName}</h1>
-        <h2 className="section__title">{gameCounter.counter}</h2>
-        <ChooseSign playerSign={this.myCallback} />
-        <PlayGround user={user} gameCounter={gameCounter} playerSign={this.state.playerSign} />
-      </section>
+        gameCounter &&
+        <section className="section">
+          <h1 className="section__title">{user.firstName}</h1>
+          <h2 className="section__title">{gameCounter.counter}</h2>
+          <ChooseSign playerSign={this.chooseSign} startGame={this.startGame}/>
+          <PlayGround user={user} gameCounter={gameCounter} playerSign={playerSign} computerSign={computerSign} startGame={startGame}/>
+        </section>
 
     );
   }
 }
 
-const mapState = ({ user, gameCounter }) => ({
+const mapState = ({user, gameCounter}) => ({
   user,
   gameCounter
 });
@@ -52,11 +64,6 @@ const mapDispatch = {
 };
 
 export const Game = withRouter(connect(mapState, mapDispatch)(GameMod));
-
-
-
-
-
 
 
 /*

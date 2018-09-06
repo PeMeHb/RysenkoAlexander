@@ -1,52 +1,72 @@
-import React from 'react';
-
+import React, {Component} from 'react';
 
 import './playerSign.scss';
-
 
 export class ChooseSign extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      signChoosed: false,
+    };
   }
 
   handleClick = (event) => {
-    const target = event.target;
-    this.props.playerSign(target.value)
+    this.props.playerSign(event.target.value);
+    this.setState({
+      signChoosed: true
+    });
+
+  };
+
+  handleSubmit = (event) => {
+    console.log(this.state.signChoosed);
+    if (this.state.signChoosed) this.props.startGame(true);
+    event.preventDefault();
   };
 
   render() {
     return (
-        <div className="your-sing">
-          <label className="sing-box">
-            X
+        <form className="your-sign" onSubmit={this.handleSubmit}>
+
+          <h3 className="sign-text">Choose your sign</h3>
+
+          <div className="sign-box">
             <input
                 type="radio"
-                name="your sing"
-                className="sing-input"
-                placeholder="Choose Your Sing"
+                id="X"
+                name="your sign"
+                className="sign-input"
+                placeholder="Choose Your Sign"
                 value="X"
+                hidden={true}
                 onClick={this.handleClick}
             />
+            <label htmlFor="X" className="sign-button">X</label>
+          </div>
 
-          </label>
-
-          <label className="sing-box">
-            O
+          <div className="sign-box">
             <input
                 type="radio"
-                name="your sing"
-                className="sing-input"
-                placeholder="Choose Your Sing"
+                id="O"
+                name="your sign"
+                className="sign-input"
+                placeholder="Choose Your Sign"
                 value="O"
+                hidden={true}
                 onClick={this.handleClick}
             />
-          </label>
-        </div>
+            <label htmlFor="O" className="sign-button">O</label>
+          </div>
+
+          <h4 className="sign-text"><b>X</b> - always go first</h4>
+
+          <button type="submit" className="start-button">Start new game</button>
+
+        </form>
     );
   }
 }
-
-
 
 
 /*

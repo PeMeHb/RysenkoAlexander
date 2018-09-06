@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 import {getCounter} from "../../services/gameService";
 import {TaskList} from "../TaskList/TaskList";
@@ -12,8 +12,16 @@ export class PlayGround extends Component {
 
     this.state = {
       squares: Array(9).fill(null),
-      isComputer: false,
+      isComputer: this.props.computerSign === "X",
     };
+
+    if (this.props.startGame) this.computer();
+    console.log(this.props.startGame);
+  }
+
+  componentDidMount() {
+       if (this.props.startGame) this.computer();
+    console.log(this.props.startGame);
   }
 
   /* const squares = Object.assign({}, this.state.squares); */
@@ -31,7 +39,7 @@ export class PlayGround extends Component {
 
   onClick = (event) => {
     const {squares, isComputer} = this.state,
-        playerSign = "X";
+        playerSign = this.props.playerSign;
 
     console.log(isComputer);
 
@@ -49,13 +57,12 @@ export class PlayGround extends Component {
 
     this.computerIQ();
 
-
   };
 
     randomCorner = (corners) => {
 
       const squares = this.state.squares.slice();
-/*        corners = [0, 2, 6, 8];*/
+/*    corners = [0, 2, 6, 8]; */
 
       console.log(corners);
 
@@ -63,7 +70,7 @@ export class PlayGround extends Component {
 
       console.log(squares[corners[randomCorner]]);
 
-      squares[corners[randomCorner]] ? this.randomCorner() : squares[corners[randomCorner]] = "O";
+      squares[corners[randomCorner]] ? this.randomCorner() : squares[corners[randomCorner]] = this.props.computerSign;
 
       this.setSquares(squares);
 
@@ -74,7 +81,7 @@ export class PlayGround extends Component {
     const squares = this.state.squares.slice(),
         length = squares.length,
         middle = (length - 1) / 2,
-        compSign = "O",
+        computerSign = this.props.computerSign,
         lines = [
           [0, 1, 2],
           [3, 4, 5],
@@ -96,29 +103,29 @@ export class PlayGround extends Component {
       //
       //  }
 
-      if (squares[a] === "O" && squares[b] === "O" && !squares[c]) squares[c] = "O";
-      if (squares[a] === "O" && squares[c] === "O" && !squares[b]) squares[b] = "O";
-      if (squares[b] === "O" && squares[c] === "O" && !squares[a]) squares[a] = "O";
+      if (squares[a] === computerSign && squares[b] === computerSign && !squares[c]) squares[c] = computerSign;
+      if (squares[a] === computerSign && squares[c] === computerSign && !squares[b]) squares[b] = computerSign;
+      if (squares[b] === computerSign && squares[c] === computerSign && !squares[a]) squares[a] = computerSign;
 
 
         if (squares[a] && squares[a] === squares[b] && !squares[c]) {
         console.log("1", squares);
 
-        squares[c] = "O";
+        squares[c] = computerSign;
         this.setSquares(squares);
         return;
       }
       if (squares[a] && squares[a] === squares[c] && !squares[b]) {
         console.log("2", squares);
 
-        squares[b] = "O";
+        squares[b] = computerSign;
         this.setSquares(squares);
         return;
       }
       if (squares[b] && squares[b] === squares[c] && !squares[a]) {
         console.log("3", squares);
 
-        squares[a] = "O";
+        squares[a] = computerSign;
         this.setSquares(squares);
         return;
       }
@@ -126,12 +133,10 @@ export class PlayGround extends Component {
     }
 
     if (!squares[middle]) {
-      squares[middle] = compSign;
+      squares[middle] = computerSign;
       this.setSquares(squares);
       return;
     }
-
-
 
       if (!squares[0] || !squares[2] || !squares[6] || !squares[8]) {
         const corners = [0, 2, 6, 8];
@@ -141,7 +146,6 @@ export class PlayGround extends Component {
       if (!squares[1] || !squares[3] || !squares[5] || !squares[7]) {
         const corners = [1, 3, 5, 7];
         this.randomCorner(corners);
-
       }
 
 /*
@@ -156,12 +160,10 @@ export class PlayGround extends Component {
     this.setSquares(squares);*/
 
 
-
   };
 
 
   playAgain = () => {
-    console.log(this.props.playerSign);
     this.setState({
       squares: Array(9).fill(null),
       isComputer: false,
@@ -175,16 +177,12 @@ export class PlayGround extends Component {
     });
   };
 
-  componentDidMount() {
-
-  }
-
 
   render() {
 
     const {squares} = this.state;
 
-    /*    const { user, gameCounter } = this.props;*/
+  /* const { user, gameCounter } = this.props;*/
 
     return (
         <div className="playGround">
@@ -203,6 +201,7 @@ export class PlayGround extends Component {
           </ul>
 
           <button className="butt" onClick={this.playAgain}>Play again</button>
+
         </div>
 
 
