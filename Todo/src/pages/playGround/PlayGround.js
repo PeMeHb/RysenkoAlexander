@@ -12,51 +12,39 @@ export class PlayGround extends Component {
 
     this.state = {
       squares: Array(9).fill(null),
-      isComputer: this.props.computerSign === "X",
+      isComputer: this.props.startGame,
     };
-
-    if (this.props.startGame) this.computer();
-    console.log(this.props.startGame);
   }
 
-  componentDidMount() {
-       if (this.props.startGame) this.computer();
-    console.log(this.props.startGame);
+  componentWillReceiveProps(nextProps) {
+    const {startGame, computerSign} = this.props;
+    if(nextProps.startGame !== startGame && computerSign === "X") {
+      console.log("Willrecive", startGame, computerSign, this.state.isComputer);
+      this.setState({
+        isComputer: this.state.isComputer === true,
+      });
+      console.log("Willrecive", this.state.isComputer);
+      this.computer();
+    }
   }
 
-  /* const squares = Object.assign({}, this.state.squares); */
-
-  /*  handleField = (event) => {
-      const target = event.target;
-      this.setState({ [target.name]: { value: target.value } });
-      console.log(target.text);
-    }; */
-
-  /*   this.setState({
-       squares: squares,
-       isComputer: !this.state.isComputer,
-     }); */
 
   onClick = (event) => {
     const {squares, isComputer} = this.state,
-        playerSign = this.props.playerSign;
+          {playerSign, startGame} = this.props;
 
-    console.log(isComputer);
+    console.log(isComputer, this.props.startGame, this.props.computerSign);
 
-    if (isComputer) return;
+    if (isComputer || !startGame) return;
     squares[event.target.id] = playerSign;
     this.setSquares(squares);
     this.computer();
   };
 
   computer = () => {
-
     const {squares, isComputer} = this.state;
-
-    console.log(isComputer);
-
+    console.log(isComputer, this.props.startGame, this.props.computerSign);
     this.computerIQ();
-
   };
 
     randomCorner = (corners) => {
@@ -171,10 +159,12 @@ export class PlayGround extends Component {
   };
 
   setSquares = (squares) => {
+    console.log(this.state.isComputer)
     this.setState({
       squares: squares,
       isComputer: this.state.isComputer = !this.state.isComputer
     });
+    console.log(this.state.isComputer)
   };
 
 
@@ -256,3 +246,18 @@ export class PlayGround extends Component {
     }*/
 
 /*  const fl = (field) => this.setState(Object.assign({}, field)); */
+
+
+
+/* const squares = Object.assign({}, this.state.squares); */
+
+/*  handleField = (event) => {
+    const target = event.target;
+    this.setState({ [target.name]: { value: target.value } });
+    console.log(target.text);
+  }; */
+
+/*   this.setState({
+     squares: squares,
+     isComputer: !this.state.isComputer,
+   }); */

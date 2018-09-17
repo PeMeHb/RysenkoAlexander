@@ -10,8 +10,9 @@ import {PlayGround} from '../../pages/playGround'
 import './game.scss';
 
 export class GameMod extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
       playerSign: null,
       computerSign: null,
@@ -24,13 +25,27 @@ export class GameMod extends Component {
       playerSign: dataFromChild === "X" ? "X" : "O",
       computerSign: dataFromChild === "X" ? "O" : "X",
     });
+    console.log(this.state.playerSign);
   };
 
   startGame = (dataFromChild) => {
-    this.setState({
-      startGame: dataFromChild
-    });
-  };
+    console.log(dataFromChild);
+
+    let nextState = Object.assign({}, this.state.startGame, { startGame: dataFromChild });
+
+/*    this.setState((state, props) => {
+      console.log(state ,props.startGame);
+      return {startGame: state.startGame === props.startGame};
+    });*/
+
+ /*   this.setState(prevState => ({
+      startGame: prevState.startGame === dataFromChild
+    }));*/
+
+    this.setState({startGame: nextState});
+
+  console.log(this.state.startGame);
+};
 
   componentDidMount() {
     getCounter()
