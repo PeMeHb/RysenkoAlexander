@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import './playerSign.scss';
 
@@ -8,21 +9,36 @@ export class ChooseSign extends Component {
 
     this.state = {
       signChoosed: false,
+      showPopup: ""
     };
   }
 
   handleClick = (event) => {
     this.props.playerSign(event.target.value);
     this.setState({
-      signChoosed: true
+      signChoosed: true,
     });
 
   };
 
   handleSubmit = (event) => {
     console.log(this.state.signChoosed);
-    if (this.state.signChoosed) this.props.startGame(true);
+    if (this.state.signChoosed) {
+      this.props.startGame(true);
+    } else {
+      this.setState(currentState => ({
+        showPopup: currentState.showPopup = "popup-appear-active",
+      }), () => this.hidePopup());
+    }
     event.preventDefault();
+  };
+
+  hidePopup = () => {
+    setTimeout(() => {
+      this.setState(currentState => ({
+        showPopup: currentState.showPopup = ""
+      }))
+    }, 2000)
   };
 
   render() {
@@ -61,12 +77,34 @@ export class ChooseSign extends Component {
 
           <h4 className="sign-text"><b>X</b> - always go first</h4>
 
-          <button type="submit" className="start-button">Start new game</button>
+          <button
+              type="submit"
+              className="start-button"
+          >
+            Start new game
+          </button>
+
+          <ReactCSSTransitionGroup
+              component="div"
+              transitionName="popup"
+              className={`sign-popup ${this.state.showPopup}`}
+              transitionAppear={true}
+              transitionAppearTimeout={500}
+              transitionEnter={false}
+              transitionLeave={false}
+          >
+              <p className="sign-text">You need to pick your sign first</p>
+          </ReactCSSTransitionGroup>
 
         </form>
     );
   }
 }
+
+
+/*        <div className={`sign-popup ${this.state.showPopup}`}>
+              <p className="sign-text">You need to pick your sign first</p>
+            </div>*/
 
 
 /*

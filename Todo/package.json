@@ -8,24 +8,12 @@
     "start": "./node_modules/.bin/webpack-dev-server --config webpack.config.js --open",
     "lint": "./node_modules/eslint/bin/eslint.js src/**/**.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/iliatcymbal/iliatcymbal-todo.git"
-  },
-  "keywords": [
-    "react"
-  ],
-  "author": "Ilia Tcymbal",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/iliatcymbal/iliatcymbal-todo/issues"
-  },
-  "homepage": "https://github.com/iliatcymbal/iliatcymbal-todo#readme",
   "dependencies": {
     "jquery": "^3.3.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-modal": "^3.1.8",
+    "react-addons-css-transition-group": "^15.6.2",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.0"
@@ -56,5 +44,18 @@
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.4",
     "yargs": "^11.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PeMeHb/RysenkoAlexander.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "Rysenko Alexander",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PeMeHb/RysenkoAlexander/issues"
+  },
+  "homepage": "https://github.com/PeMeHb/RysenkoAlexander#readme"
 }

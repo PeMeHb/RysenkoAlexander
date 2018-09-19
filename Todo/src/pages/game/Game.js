@@ -31,7 +31,7 @@ export class GameMod extends Component {
   startGame = (dataFromChild) => {
     console.log(dataFromChild);
 
-    let nextState = Object.assign({}, this.state.startGame, { startGame: dataFromChild });
+  //  let nextState = Object.assign({}, this.state, { startGame: dataFromChild });
 
 /*    this.setState((state, props) => {
       console.log(state ,props.startGame);
@@ -42,7 +42,7 @@ export class GameMod extends Component {
       startGame: prevState.startGame === dataFromChild
     }));*/
 
-    this.setState({startGame: nextState});
+    this.setState({startGame: dataFromChild});
 
   console.log(this.state.startGame);
 };

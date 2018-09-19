@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-
 import {getCounter} from "../../services/gameService";
 import {TaskList} from "../TaskList/TaskList";
-
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import './playGround.scss';
 
 
@@ -12,26 +11,43 @@ export class PlayGround extends Component {
 
     this.state = {
       squares: Array(9).fill(null),
-      isComputer: this.props.startGame,
+      isComputer: false,
+      playAgain: true
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const {startGame, computerSign} = this.props;
-    if(nextProps.startGame !== startGame && computerSign === "X") {
-      console.log("Willrecive", startGame, computerSign, this.state.isComputer);
-      this.setState({
-        isComputer: this.state.isComputer === true,
-      });
-      console.log("Willrecive", this.state.isComputer);
-      this.computer();
+    if (prevProps.startGame !== startGame && computerSign === "X") {
+
+      console.log("DidUpdate", startGame, computerSign);
+      console.log("test", this.state.isComputer);
+
+      this.setState(currentState => ({
+        isComputer: !currentState.isComputer,
+        playAgain: !currentState.playAgain
+      }), () => this.computer());
+
     }
   }
 
 
+  /*  componentWillReceiveProps(nextProps) {
+      const {startGame, computerSign} = this.props;
+      if(nextProps.startGame !== startGame && computerSign === "X") {
+        console.log("Willrecive", startGame, computerSign, this.state.isComputer);
+        this.setState({
+          isComputer: this.state.isComputer === true,
+        });
+        console.log("Willrecive", this.state.isComputer);
+        this.computer();
+      }
+    }*/
+
+
   onClick = (event) => {
     const {squares, isComputer} = this.state,
-          {playerSign, startGame} = this.props;
+        {playerSign, startGame} = this.props;
 
     console.log(isComputer, this.props.startGame, this.props.computerSign);
 
@@ -41,31 +57,31 @@ export class PlayGround extends Component {
     this.computer();
   };
 
-  computer = () => {
-    const {squares, isComputer} = this.state;
-    console.log(isComputer, this.props.startGame, this.props.computerSign);
-    this.computerIQ();
+
+  randomCorner = (corners) => {
+
+    const squares = this.state.squares.slice();
+    /*    corners = [0, 2, 6, 8]; */
+
+    console.log("random corner function", corners);
+
+    let randomCorner = Math.floor(Math.random() * corners.length);
+
+    console.log(corners[randomCorner]);
+
+    if (!squares[corners[randomCorner]]) {
+      squares[corners[randomCorner]] = this.props.computerSign;
+      this.setSquares(squares);
+    } else {
+      this.randomCorner(corners);
+    }
+
+    // !squares[corners[randomCorner]] ? squares[corners[randomCorner]] = this.props.computerSign : this.randomCorner(corners);
+
   };
 
-    randomCorner = (corners) => {
 
-      const squares = this.state.squares.slice();
-/*    corners = [0, 2, 6, 8]; */
-
-      console.log(corners);
-
-      let randomCorner = Math.floor(Math.random() * corners.length);
-
-      console.log(squares[corners[randomCorner]]);
-
-      squares[corners[randomCorner]] ? this.randomCorner() : squares[corners[randomCorner]] = this.props.computerSign;
-
-      this.setSquares(squares);
-
-    };
-
-
-  computerIQ = () => {
+  computer = () => {
     const squares = this.state.squares.slice(),
         length = squares.length,
         middle = (length - 1) / 2,
@@ -91,12 +107,27 @@ export class PlayGround extends Component {
       //
       //  }
 
-      if (squares[a] === computerSign && squares[b] === computerSign && !squares[c]) squares[c] = computerSign;
-      if (squares[a] === computerSign && squares[c] === computerSign && !squares[b]) squares[b] = computerSign;
-      if (squares[b] === computerSign && squares[c] === computerSign && !squares[a]) squares[a] = computerSign;
+      if (squares[a] === computerSign && squares[b] === computerSign && !squares[c]) {
+        squares[c] = computerSign;
+        console.log("a = b");
+        this.setSquares(squares);
 
+        return;
+      }
+      if (squares[a] === computerSign && squares[c] === computerSign && !squares[b]) {
+        squares[b] = computerSign;
+        console.log("a = c");
+        this.setSquares(squares);
+        return;
+      }
+      if (squares[b] === computerSign && squares[c] === computerSign && !squares[a]) {
+        squares[a] = computerSign;
+        console.log("b = c");
+        this.setSquares(squares);
+        return;
+      }
 
-        if (squares[a] && squares[a] === squares[b] && !squares[c]) {
+      if (squares[a] && squares[a] === squares[b] && !squares[c]) {
         console.log("1", squares);
 
         squares[c] = computerSign;
@@ -126,40 +157,64 @@ export class PlayGround extends Component {
       return;
     }
 
-      if (!squares[0] || !squares[2] || !squares[6] || !squares[8]) {
-        const corners = [0, 2, 6, 8];
-        this.randomCorner(corners);
-        return;
-      }
-      if (!squares[1] || !squares[3] || !squares[5] || !squares[7]) {
-        const corners = [1, 3, 5, 7];
-        this.randomCorner(corners);
-      }
+    if (!squares[0] || !squares[1] || !squares[2] || !squares[3] || !squares[5] || !squares[6] || !squares[7] || !squares[8]) {
+      const corners = [0, 1, 2, 3, 5, 6, 7, 8];
+      console.log("randomCorner");
+      this.randomCorner(corners);
+    }
 
-/*
-    let randomCorner = Math.floor(Math.random() * corners.length);
+    /*      if (!squares[1] || !squares[3] || !squares[5] || !squares[7]) {
+            const corners = [1, 3, 5, 7];
+            console.log("randomCorner - 2" );
+            this.randomCorner(corners);
+          }*/
 
-    console.log(squares[corners[randomCorner]]);
+    /*
+        let randomCorner = Math.floor(Math.random() * corners.length);
 
-    squares[corners[randomCorner]] = "O";
+        console.log(squares[corners[randomCorner]]);
 
-    //   squares[corners[randomCorner]] ? this.randomCorner() : squares[corners[randomCorner]] = "O";
+        squares[corners[randomCorner]] = "O";
 
-    this.setSquares(squares);*/
+        //   squares[corners[randomCorner]] ? this.randomCorner() : squares[corners[randomCorner]] = "O";
 
+        this.setSquares(squares);*/
+
+
+  };
+
+  winGame = () => {
 
   };
 
 
   playAgain = () => {
-    this.setState({
-      squares: Array(9).fill(null),
-      isComputer: false,
-    });
+    console.log(this.props.computerSign);
+    if (this.props.computerSign === "X") {
+      this.setState(currentState => ({
+        squares: currentState.squares = Array(9).fill(null),
+        isComputer: currentState.isComputer = true
+      }), () => this.computer());
+      /*      this.setState({
+              squares: Array(9).fill(null),
+              isComputer: this.state.isComputer = true
+            }, () => this.computer() );*/
+    } else {
+      this.setState(currentState => ({
+        squares: currentState.squares = Array(9).fill(null),
+        isComputer: currentState.isComputer = false
+      }));
+
+      /*    this.setState(currentState => ({
+            squares: Array(9).fill(null),
+            isComputer: this.state.isComputer = false
+          }));*/
+    }
+    console.log(this.state.squares, this.state.isComputer)
   };
 
   setSquares = (squares) => {
-    console.log(this.state.isComputer)
+    console.log(this.state.isComputer);
     this.setState({
       squares: squares,
       isComputer: this.state.isComputer = !this.state.isComputer
@@ -170,14 +225,54 @@ export class PlayGround extends Component {
 
   render() {
 
-    const {squares} = this.state;
+    const {squares, playAgain} = this.state;
 
-  /* const { user, gameCounter } = this.props;*/
-
+    /* const { user, gameCounter } = this.props;*/
+    console.log(playAgain);
     return (
         <div className="playGround">
 
-          <ul className="ground"> {
+
+          <ReactCSSTransitionGroup
+              component="ul"
+              transitionName="sign"
+              className="ground"
+              transitionAppear={true}
+              transitionAppearTimeout={500}
+              transitionEnter={false}
+              transitionLeave={false}
+          >
+            {
+              squares.map((box, boxIndex) => (
+                  <li
+                      key={boxIndex}
+                      id={boxIndex}
+                      className="cell"
+                      onClick={this.onClick}
+                  >
+                    {box}
+                  </li>
+              ))}
+          </ReactCSSTransitionGroup>
+
+          <button
+              className="butt"
+              disabled={playAgain}
+              onClick={this.playAgain}
+          >
+            Play again
+          </button>
+
+        </div>
+
+
+    );
+  }
+}
+
+
+
+/*          <ul className="ground"> {
             squares.map((box, boxIndex) => (
                 <li
                     key={boxIndex}
@@ -188,16 +283,7 @@ export class PlayGround extends Component {
                   {box}
                 </li>
             ))}
-          </ul>
-
-          <button className="butt" onClick={this.playAgain}>Play again</button>
-
-        </div>
-
-
-    );
-  }
-}
+          </ul>*/
 
 
 /*
@@ -247,7 +333,11 @@ export class PlayGround extends Component {
 
 /*  const fl = (field) => this.setState(Object.assign({}, field)); */
 
-
+/*  computer = () => {
+    const {squares, isComputer} = this.state;
+    console.log(isComputer, this.props.startGame, this.props.computerSign);
+    this.computer();
+  };*/
 
 /* const squares = Object.assign({}, this.state.squares); */
 

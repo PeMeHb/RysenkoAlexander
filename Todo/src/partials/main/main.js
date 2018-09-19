@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ReactModal from 'react-modal';
 import { connect } from 'react-redux';
 
@@ -44,7 +44,9 @@ export class MainComponent extends Component {
         <ReactModal
           isOpen={this.state.openModal}
           contentLabel="Minimal Modal Example"
-          shouldCloseOnEsc
+          shouldCloseOnEsc={true}
+          shouldCloseOnOverlayClick={true}
+          shouldReturnFocusAfterClose={true}
           ariaHideApp={false}
         >
           <p>Hello</p>
