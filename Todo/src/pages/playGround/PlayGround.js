@@ -12,7 +12,8 @@ export class PlayGround extends Component {
     this.state = {
       squares: Array(9).fill(null),
       isComputer: false,
-      playAgain: true
+      playAgain: true,
+      winLine: null
     };
   }
 
@@ -110,6 +111,15 @@ export class PlayGround extends Component {
       if (squares[a] === computerSign && squares[b] === computerSign && !squares[c]) {
         squares[c] = computerSign;
         console.log("a = b");
+
+   /*     this.setState(currentState => ({
+          winLine: currentState.winLine = lines[i],
+        }));*/
+
+        let line = lines[i];
+        console.log(line, squares);
+
+
         this.setSquares(squares);
 
         return;
@@ -117,13 +127,24 @@ export class PlayGround extends Component {
       if (squares[a] === computerSign && squares[c] === computerSign && !squares[b]) {
         squares[b] = computerSign;
         console.log("a = c");
+
+        console.log(lines[i]);
+/*        squares[a].style("color:red");
+        squares[b].style("color:red");
+        squares[c].style("color:red");*/
+
         this.setSquares(squares);
+
+        this.winGame();
         return;
       }
       if (squares[b] === computerSign && squares[c] === computerSign && !squares[a]) {
         squares[a] = computerSign;
         console.log("b = c");
+
+        console.log(lines[i]);
         this.setSquares(squares);
+
         return;
       }
 
@@ -225,9 +246,10 @@ export class PlayGround extends Component {
 
   render() {
 
-    const {squares, playAgain} = this.state;
+    const {squares, playAgain, winLine} = this.state;
 
     /* const { user, gameCounter } = this.props;*/
+    console.log(winLine);
     console.log(playAgain);
     return (
         <div className="playGround">
@@ -248,6 +270,7 @@ export class PlayGround extends Component {
                       key={boxIndex}
                       id={boxIndex}
                       className="cell"
+                      style={  {color: 'red'}}
                       onClick={this.onClick}
                   >
                     {box}
