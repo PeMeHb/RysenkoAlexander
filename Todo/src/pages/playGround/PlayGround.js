@@ -108,6 +108,8 @@ export class PlayGround extends Component {
       //
       //  }
 
+      let line = lines[i];
+
       if (squares[a] === computerSign && squares[b] === computerSign && !squares[c]) {
         squares[c] = computerSign;
         console.log("a = b");
@@ -116,9 +118,10 @@ export class PlayGround extends Component {
           winLine: currentState.winLine = lines[i],
         }));*/
 
-        let line = lines[i];
-        console.log(line, squares);
 
+       /* console.log(line, squares);*/
+
+        this.winGame(line, squares);
 
         this.setSquares(squares);
 
@@ -128,21 +131,24 @@ export class PlayGround extends Component {
         squares[b] = computerSign;
         console.log("a = c");
 
-        console.log(lines[i]);
+
 /*        squares[a].style("color:red");
         squares[b].style("color:red");
         squares[c].style("color:red");*/
 
+        this.winGame(line, squares);
+
         this.setSquares(squares);
 
-        this.winGame();
+ /*       this.winGame(); */
         return;
       }
       if (squares[b] === computerSign && squares[c] === computerSign && !squares[a]) {
         squares[a] = computerSign;
         console.log("b = c");
 
-        console.log(lines[i]);
+        this.winGame(line, squares);
+
         this.setSquares(squares);
 
         return;
@@ -204,8 +210,17 @@ export class PlayGround extends Component {
 
   };
 
-  winGame = () => {
+  winGame = (line, squares) => {
+    console.log(line, squares);
+    line.forEach( (elem) => {
+      console.log(elem ,squares.length);
+      for(let i = 0; i < squares.length; i++) {
+        if (elem === i) {
+          console.log(squares[i]);
 
+        }
+      }
+    })
   };
 
 
@@ -265,17 +280,30 @@ export class PlayGround extends Component {
               transitionLeave={false}
           >
             {
-              squares.map((box, boxIndex) => (
-                  <li
-                      key={boxIndex}
-                      id={boxIndex}
-                      className="cell"
-                      style={  {color: 'red'}}
-                      onClick={this.onClick}
-                  >
-                    {box}
-                  </li>
-              ))}
+
+              squares.map((box, boxIndex) => {
+/*
+                winLine.forEach( (el) => {
+                 if (el === boxIndex) {
+                   console.log(el);
+                 }
+                });
+*/
+
+                  return (
+                      <li
+                          key={boxIndex}
+                          id={boxIndex}
+                          className="cell"
+                          /*       style={  {color: 'red'}}*/
+                          onClick={this.onClick}
+                      >
+                        {box}
+                      </li>
+                  )
+
+              })
+            }
           </ReactCSSTransitionGroup>
 
           <button
