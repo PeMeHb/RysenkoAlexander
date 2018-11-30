@@ -56,41 +56,16 @@
     }
   }
 
-  .sign-popup {
-    opacity: 0.01;
-    visibility: hidden;
+/*  .sign-popup:after {
+    content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    height: 94px;
-    width: 135px;
-    padding: 10px;
-    text-align: center;
-    background-color: #cccccc;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    transition: 500ms ease-in;
-    &:after {
-      content: '';
-      position: absolute;
-      bottom: -30px;
-      left: 50%;
-      transform: translateX(-50%);
-      border: 10px solid transparent;
-      border-top: 20px solid #cccccc;
-    }
-    &.popup-appear-active {
-      opacity: 1;
-      visibility: visible;
-    }
-    .sign-text {
-      color: #000;
-      font-weight: bold;
-    }
-  }
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 10px solid transparent;
+    border-top: 20px solid #cccccc;
+  }*/
+
 }
 
 

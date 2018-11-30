@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import './playerSign.scss';
+import {Popup} from '../popup';
 
 export class ChooseSign extends Component {
   constructor(props) {
@@ -9,7 +9,7 @@ export class ChooseSign extends Component {
 
     this.state = {
       signChoosed: false,
-      showPopup: ""
+      activatePopup: false
     };
   }
 
@@ -18,35 +18,29 @@ export class ChooseSign extends Component {
     this.setState({
       signChoosed: true,
     });
-
   };
 
   handleSubmit = (event) => {
-    console.log(this.state.signChoosed);
+    console.log(this.state.signChoosed, this.state.activatePopup);
     if (this.state.signChoosed) {
       this.props.startGame(true);
     } else {
       this.setState(currentState => ({
-        showPopup: currentState.showPopup = "popup-appear-active",
-      }), () => this.hidePopup());
+        activatePopup: currentState.activatePopup = true,
+      }), () => {
+        this.setState({
+          activatePopup: false,
+        });
+          });
     }
     event.preventDefault();
   };
 
-  hidePopup = () => {
-    setTimeout(() => {
-      this.setState(currentState => ({
-        showPopup: currentState.showPopup = ""
-      }))
-    }, 2000)
-  };
-
   render() {
+    const {activatePopup} = this.state;
     return (
         <form className="your-sign" onSubmit={this.handleSubmit}>
-
           <h3 className="sign-text">Choose your sign</h3>
-
           <div className="sign-box">
             <input
                 type="radio"
@@ -74,37 +68,19 @@ export class ChooseSign extends Component {
             />
             <label htmlFor="O" className="sign-button">O</label>
           </div>
-
           <h4 className="sign-text"><b>X</b> - always go first</h4>
-
           <button
               type="submit"
               className="start-button"
           >
             Start new game
           </button>
-
-          <ReactCSSTransitionGroup
-              component="div"
-              transitionName="popup"
-              className={`sign-popup ${this.state.showPopup}`}
-              transitionAppear={true}
-              transitionAppearTimeout={500}
-              transitionEnter={false}
-              transitionLeave={false}
-          >
-              <p className="sign-text">You need to pick your sign first</p>
-          </ReactCSSTransitionGroup>
-
+          <Popup activatePopup={activatePopup} text={['You need to pick your sign first ',<b>X</b>,' or ',<b>O</b>]} delay={3000} />
         </form>
     );
   }
 }
 
-
-/*        <div className={`sign-popup ${this.state.showPopup}`}>
-              <p className="sign-text">You need to pick your sign first</p>
-            </div>*/
 
 
 /*

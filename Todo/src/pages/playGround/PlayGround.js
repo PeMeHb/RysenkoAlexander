@@ -1,8 +1,16 @@
 import React, {Component} from 'react';
-import {getCounter} from "../../services/gameService";
-import {TaskList} from "../TaskList/TaskList";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+
+import {Popup} from '../popup';
+import {GameMod} from '../game';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {getCounter, updateCount} from '../../services/gameService';
+import {store, addGame} from '../../store';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
+
 import './playGround.scss';
+import {getTasks, updateTask} from "../../services/tasksService";
 
 
 export class PlayGround extends Component {
@@ -13,7 +21,9 @@ export class PlayGround extends Component {
       squares: Array(9).fill(null),
       isComputer: false,
       playAgain: true,
-      winLine: null
+      winLine: null,
+      activatePopup: false,
+      counter: this.props.gameCounter.counter,
     };
   }
 
@@ -21,8 +31,8 @@ export class PlayGround extends Component {
     const {startGame, computerSign} = this.props;
     if (prevProps.startGame !== startGame && computerSign === "X") {
 
-      console.log("DidUpdate", startGame, computerSign);
-      console.log("test", this.state.isComputer);
+/*      console.log("DidUpdate", startGame, computerSign);
+      console.log("test", this.state.isComputer);*/
 
       this.setState(currentState => ({
         isComputer: !currentState.isComputer,
@@ -31,6 +41,13 @@ export class PlayGround extends Component {
 
     }
   }
+
+/*
+  componentDidMount() {
+    getCounter()
+        .then(this.props.addGame);
+  }
+*/
 
 
   /*  componentWillReceiveProps(nextProps) {
@@ -50,7 +67,7 @@ export class PlayGround extends Component {
     const {squares, isComputer} = this.state,
         {playerSign, startGame} = this.props;
 
-    console.log(isComputer, this.props.startGame, this.props.computerSign);
+/*    console.log(isComputer, this.props.startGame, this.props.computerSign);*/
 
     if (isComputer || !startGame) return;
     squares[event.target.id] = playerSign;
@@ -64,11 +81,11 @@ export class PlayGround extends Component {
     const squares = this.state.squares.slice();
     /*    corners = [0, 2, 6, 8]; */
 
-    console.log("random corner function", corners);
+/*    console.log("random corner function", corners);*/
 
     let randomCorner = Math.floor(Math.random() * corners.length);
 
-    console.log(corners[randomCorner]);
+/*    console.log(corners[randomCorner]);*/
 
     if (!squares[corners[randomCorner]]) {
       squares[corners[randomCorner]] = this.props.computerSign;
@@ -108,22 +125,22 @@ export class PlayGround extends Component {
       //
       //  }
 
-      let line = lines[i];
+/*      let line = lines[i];*/
 
       if (squares[a] === computerSign && squares[b] === computerSign && !squares[c]) {
         squares[c] = computerSign;
         console.log("a = b");
 
-   /*     this.setState(currentState => ({
+        this.setState(currentState => ({
           winLine: currentState.winLine = lines[i],
-        }));*/
-
+        }));
 
        /* console.log(line, squares);*/
-
-        this.winGame(line, squares);
+/*        this.winGame(line, squares);*/
 
         this.setSquares(squares);
+
+        this.winGame();
 
         return;
       }
@@ -132,24 +149,28 @@ export class PlayGround extends Component {
         console.log("a = c");
 
 
-/*        squares[a].style("color:red");
-        squares[b].style("color:red");
-        squares[c].style("color:red");*/
+        this.setState(currentState => ({
+          winLine: currentState.winLine = lines[i],
+        }));
 
-        this.winGame(line, squares);
 
         this.setSquares(squares);
 
- /*       this.winGame(); */
+        this.winGame();
+
         return;
       }
       if (squares[b] === computerSign && squares[c] === computerSign && !squares[a]) {
         squares[a] = computerSign;
         console.log("b = c");
 
-        this.winGame(line, squares);
+        this.setState(currentState => ({
+          winLine: currentState.winLine = lines[i],
+        }));
 
         this.setSquares(squares);
+
+        this.winGame();
 
         return;
       }
@@ -207,68 +228,108 @@ export class PlayGround extends Component {
 
         this.setSquares(squares);*/
 
-
   };
 
-  winGame = (line, squares) => {
-    console.log(line, squares);
-    line.forEach( (elem) => {
-      console.log(elem ,squares.length);
-      for(let i = 0; i < squares.length; i++) {
-        if (elem === i) {
-          console.log(squares[i]);
+  winGame = () => {
+    const { user, gameCounter } = this.props;
+    const { gameCounter2 } = this.state;
 
-        }
-      }
-    })
+    this.setState(currentState => ({
+      activatePopup: currentState.activatePopup = true,
+    }), () => {
+      this.setState({
+        activatePopup: false,
+      });
+    });
+
+  //  this.props.changeCounter(+ 1);
+
+  //  console.log(gameCounter2);
+
+   console.log( this.props);
+
+
+
+    this.props.changeCounter(gameCounter.counter = + 1)
+
+  //  this.props.dispatch(addGame({gameCounter}));
+
+
+/*
+
+    getCounter()
+        .then(gameCounter => this.props.addGame(gameCounter))
+        /!* eslint no-console: ["error", { allow: ["log"] }] *!/
+        .catch(console.log);
+*/
+
+
+/*
+    updateCount(gameCounter2)
+        .then(() => this.setState({ gameCounter2: gameCounter2.counter +1 }))
+        /!* eslint no-console: ["error", { allow: ["log"] }] *!/
+        .catch(console.log);
+*/
+
+  //  store.dispatch({ type: 'ADD_GAME' });
+
+/*    updateCount()
+        .then(gameCounter => this.props.addGame(gameCounter))
+        /!* eslint no-console: ["error", { allow: ["log"] }] *!/
+        .catch(console.log);*/
+
+
+   // this.props.addGame(gameCounter);
+
+
+/*    updateCount = (gameCounter) => {
+      this.props.addGame(gameCounter);
+    };*/
+
+/*    updateCount(gameCounter)
+    .then(() => this.setState({gameCounter: gameCounter + 1}))
+      /!* eslint no-console: ["error", { allow: ["log"] }] *!/
+          .catch(console.log);*/
   };
 
 
   playAgain = () => {
-    console.log(this.props.computerSign);
-    if (this.props.computerSign === "X") {
+/*    console.log(this.props.computerSign);*/
+    const {computerSign} = this.props;
+    if (computerSign === "X") {
       this.setState(currentState => ({
-        squares: currentState.squares = Array(9).fill(null),
         isComputer: currentState.isComputer = true
       }), () => this.computer());
-      /*      this.setState({
-              squares: Array(9).fill(null),
-              isComputer: this.state.isComputer = true
-            }, () => this.computer() );*/
     } else {
       this.setState(currentState => ({
-        squares: currentState.squares = Array(9).fill(null),
         isComputer: currentState.isComputer = false
       }));
-
-      /*    this.setState(currentState => ({
-            squares: Array(9).fill(null),
-            isComputer: this.state.isComputer = false
-          }));*/
     }
-    console.log(this.state.squares, this.state.isComputer)
+    this.setState(currentState => ({
+      squares: currentState.squares = Array(9).fill(null),
+    }));
   };
 
   setSquares = (squares) => {
-    console.log(this.state.isComputer);
+/*    console.log(this.state.isComputer);*/
     this.setState({
       squares: squares,
       isComputer: this.state.isComputer = !this.state.isComputer
     });
-    console.log(this.state.isComputer)
+/*    console.log(this.state.isComputer)*/
   };
 
 
   render() {
 
-    const {squares, playAgain, winLine} = this.state;
+    const {squares, playAgain, winLine, activatePopup} = this.state,
+          { user, gameCounter } = this.props;
 
     /* const { user, gameCounter } = this.props;*/
-    console.log(winLine);
-    console.log(playAgain);
+/*    console.log(winLine);
+    console.log(playAgain);*/
     return (
         <div className="playGround">
-
 
           <ReactCSSTransitionGroup
               component="ul"
@@ -280,32 +341,20 @@ export class PlayGround extends Component {
               transitionLeave={false}
           >
             {
-
               squares.map((box, boxIndex) => {
-/*
-                winLine.forEach( (el) => {
-                 if (el === boxIndex) {
-                   console.log(el);
-                 }
-                });
-*/
-
                   return (
                       <li
                           key={boxIndex}
                           id={boxIndex}
                           className="cell"
-                          /*       style={  {color: 'red'}}*/
                           onClick={this.onClick}
                       >
                         {box}
                       </li>
                   )
-
               })
             }
           </ReactCSSTransitionGroup>
-
           <button
               className="butt"
               disabled={playAgain}
@@ -313,14 +362,26 @@ export class PlayGround extends Component {
           >
             Play again
           </button>
-
+          <Popup activatePopup={activatePopup} text={`${user.firstName} win`} delay={5000} />
         </div>
-
-
     );
   }
 }
 
+/*
+
+const mapState = ({user, gameCounter}) => ({
+  user,
+  gameCounter
+});
+
+const mapDispatch = {
+  addGame
+};
+
+export const Game = withRouter(connect(mapState, mapDispatch)(PlayGround));
+
+*/
 
 
 /*          <ul className="ground"> {
@@ -402,3 +463,28 @@ export class PlayGround extends Component {
      squares: squares,
      isComputer: !this.state.isComputer,
    }); */
+
+/*  winGame = (line, squares) => {
+/!*    console.log(line, squares);*!/
+    line.forEach( (elem) => {
+      for(let i = 0; i < squares.length; i++) {
+        if (elem === i) {
+
+        }
+      }
+    })
+  };*/
+
+/*  getStyle = (index) => {
+    const winLine = this.state.winLine;
+    console.log(winLine, index);
+    if (!winLine) return;
+    winLine.forEach( (el) => {
+      if (el === index) {
+        console.log(el);
+        return {
+          color: 'red'
+        }
+      }
+    });
+  };*/

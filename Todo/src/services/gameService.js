@@ -1,7 +1,7 @@
 import { request } from './request';
 
-export const createCount = data => request('gameCount', 'post', data);
+export const createCount = data => request('game', 'post', data);
 
-export const updateCount = data => request('put', data);
+export const updateCount = data => request( 'game' ,'put', data);
 
 export const getCounter = () => request('game', 'get');

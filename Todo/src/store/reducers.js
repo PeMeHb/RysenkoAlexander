@@ -38,10 +38,10 @@ export const info = (state = null, action) => {
   return state;
 };
 
-export const gameCounter = (state = null, action) => {
+export const gameCounter = (state = {}, action) => {
   switch (action.type) {
     case ADD_GAME: {
-      return action.payload;
+      return  Object.assign({}, state, { ...action.payload });
     }
   }
 

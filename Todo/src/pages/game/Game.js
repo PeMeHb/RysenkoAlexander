@@ -3,11 +3,13 @@ import {Link, withRouter} from 'react-router-dom';
 import {connect} from "react-redux";
 
 import {createCount, updateCount, getCounter} from '../../services/gameService';
-import {addGame} from '../../store';
+import {addGame, gameCounter} from '../../store';
 import {ChooseSign} from '../../pages/chooseSign';
 import {PlayGround} from '../../pages/playGround'
 
 import './game.scss';
+import {Pages} from "../Pages";
+import {checkUser, update} from "../../services/userService";
 
 export class GameMod extends Component {
   constructor(props) {
@@ -18,6 +20,8 @@ export class GameMod extends Component {
       computerSign: null,
       startGame: null,
     };
+
+    console.log(this.props);
   }
 
   chooseSign = (dataFromChild) => {
@@ -48,9 +52,21 @@ export class GameMod extends Component {
 };
 
   componentDidMount() {
+    console.log(this.props, this.props.addGame);
     getCounter()
         .then(this.props.addGame);
   }
+
+  changeCounter = (counter) => {
+    this.props.addGame(counter);
+    this.setCounter(counter);
+    console.log(counter);
+  };
+
+  setCounter = (counter) => {
+    updateCount(counter)
+        .then(this.props.addGame);
+  };
 
   render() {
     const { user, gameCounter } = this.props,
@@ -62,7 +78,7 @@ export class GameMod extends Component {
           <h1 className="section__title">{user.firstName}</h1>
           <h2 className="section__title">{gameCounter.counter}</h2>
           <ChooseSign playerSign={this.chooseSign} startGame={this.startGame}/>
-          <PlayGround user={user} gameCounter={gameCounter} playerSign={playerSign} computerSign={computerSign} startGame={startGame}/>
+          <PlayGround user={user} gameCounter={gameCounter} playerSign={playerSign} computerSign={computerSign} startGame={startGame} changeCounter={this.changeCounter}/>
         </section>
 
     );
@@ -78,7 +94,15 @@ const mapDispatch = {
   addGame
 };
 
-export const Game = withRouter(connect(mapState, mapDispatch)(GameMod));
+
+/*const mapDispatch = (dispatch) => ({
+  addGame(gameCounter) {
+    dispatch(addGame(gameCounter))
+  }
+});*/
+
+
+export const Game = connect(mapState, mapDispatch)(GameMod);
 
 
 /*

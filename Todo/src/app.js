@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import {BrowserRouter as Router, withRouter} from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import { App } from './app.component';
