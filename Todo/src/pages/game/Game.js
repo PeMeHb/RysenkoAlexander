@@ -21,7 +21,7 @@ export class GameMod extends Component {
       startGame: null,
     };
 
-    console.log(this.props);
+  //  console.log(this.props);
   }
 
   chooseSign = (dataFromChild) => {
@@ -29,11 +29,11 @@ export class GameMod extends Component {
       playerSign: dataFromChild === "X" ? "X" : "O",
       computerSign: dataFromChild === "X" ? "O" : "X",
     });
-    console.log(this.state.playerSign);
+  //  console.log(this.state.playerSign);
   };
 
   startGame = (dataFromChild) => {
-    console.log(dataFromChild);
+  //  console.log(dataFromChild);
 
   //  let nextState = Object.assign({}, this.state, { startGame: dataFromChild });
 
@@ -48,24 +48,17 @@ export class GameMod extends Component {
 
     this.setState({startGame: dataFromChild});
 
-  console.log(this.state.startGame);
+//  console.log(this.state.startGame);
 };
 
   componentDidMount() {
-    console.log(this.props, this.props.addGame);
     getCounter()
         .then(this.props.addGame);
   }
 
   changeCounter = (counter) => {
-    this.props.addGame(counter);
-    this.setCounter(counter);
-    console.log(counter);
-  };
-
-  setCounter = (counter) => {
     updateCount(counter)
-        .then(this.props.addGame);
+        .then(this.props.addGame(counter));
   };
 
   render() {
@@ -78,7 +71,14 @@ export class GameMod extends Component {
           <h1 className="section__title">{user.firstName}</h1>
           <h2 className="section__title">{gameCounter.counter}</h2>
           <ChooseSign playerSign={this.chooseSign} startGame={this.startGame}/>
-          <PlayGround user={user} gameCounter={gameCounter} playerSign={playerSign} computerSign={computerSign} startGame={startGame} changeCounter={this.changeCounter}/>
+          <PlayGround
+              user={user}
+              gameCounter={gameCounter}
+              playerSign={playerSign}
+              computerSign={computerSign}
+              startGame={startGame}
+              changeCounter={this.changeCounter}
+          />
         </section>
 
     );
@@ -93,14 +93,6 @@ const mapState = ({user, gameCounter}) => ({
 const mapDispatch = {
   addGame
 };
-
-
-/*const mapDispatch = (dispatch) => ({
-  addGame(gameCounter) {
-    dispatch(addGame(gameCounter))
-  }
-});*/
-
 
 export const Game = connect(mapState, mapDispatch)(GameMod);
 

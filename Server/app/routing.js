@@ -25,7 +25,7 @@ module.exports = (app) => {
   const { users, tasks, categories, products, game } = require('./routes');
 
   _.get('/', (ctx) => {
-    ctx.body = { data: 'Hello Easy User' };
+    ctx.body = { data: 'Hello User' };
   });
 
   _.get('/users', users.get);
@@ -33,6 +33,7 @@ module.exports = (app) => {
   _.post('/public/user', users.create);
   _.put('/user', users.update);
   _.get('/game', game.getCounter);
+  _.put('/game', game.updateCount);
   _.get('/info', tasks.getInfo);
 
   createCommonRoutes({ routeController: tasks, name: 'tasks', allPrivate: true });

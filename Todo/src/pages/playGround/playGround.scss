@@ -2,7 +2,6 @@
   margin: 0 auto;
 
   .ground {
-
     max-width: 200px;
     display: flex;
     flex-wrap: wrap;
@@ -16,12 +15,16 @@
     box-sizing: border-box;
     height: 60px;
     background-color: #fff;
-    color: #000;
+    color: #fff;
+  //  color: #000;
     font-size: 1.1rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: color 500ms ease-in;
+    &.signBox-appear-active {
+      color: #000;
+    }
   }
 
 }
-
