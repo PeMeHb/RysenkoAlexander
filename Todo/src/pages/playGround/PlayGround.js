@@ -1,22 +1,22 @@
 import React, {Component} from 'react';
 
 import {Popup} from '../popup';
-import {GameMod} from '../game';
+/*import {GameMod} from '../game';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {getCounter, updateCount} from '../../services/gameService';
-import {store, addGame} from '../../store';
+import {store, addGame} from '../../store';*/
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 
 import './playGround.scss';
-import {getTasks, updateTask} from "../../services/tasksService";
 
 
 export class PlayGround extends Component {
   constructor(props) {
     super(props);
 
+    this.signPlaced = false;
     this.cellRefs = [];
     this.getRefs = element => {
       this.cellRefs.push(element);
@@ -48,6 +48,10 @@ export class PlayGround extends Component {
     this.setSquares(squares);
     this.checkSquares(true);
     this.computer();
+    /*    setTimeout( () => {
+          this.checkSquares(false, true);
+        }, 0);*/
+
   };
 
   randomCorner = () => {
@@ -66,12 +70,118 @@ export class PlayGround extends Component {
   };
 
   computer = () => {
+
+    console.log('computer');
+
+    const squares = this.state.squares.slice(),
+        length = squares.length,
+        middle = (length - 1) / 2,
+        computerSign = this.props.computerSign;
+
+    if (!this.signPlaced) {
+
+      if (!squares[middle]) {
+        console.log('sign center');
+        squares[middle] = computerSign;
+        this.setSquares(squares);
+        return;
+      }
+      this.randomCorner();
+      this.signPlaced = false;
+    }
+
+    this.checkSquares(false, true);
+
+  };
+
+  /* computer = () => {
+     const squares = this.state.squares.slice(),
+         length = squares.length,
+         middle = (length - 1) / 2,
+         computerSign = this.props.computerSign,
+         playerSign = this.props.playerSign,
+         isComputer = this.state.isComputer,
+         lines = [
+           [0, 1, 2],
+           [3, 4, 5],
+           [6, 7, 8],
+           [0, 3, 6],
+           [1, 4, 7],
+           [2, 5, 8],
+           [0, 4, 8],
+           [2, 4, 6],
+         ],
+         lineLength = lines.length;
+
+   //  if (!isComputer) return;
+
+
+
+     /!*    for (let i = 0; i < lineLength; i++) {
+           const [a, b, c] = lines[i];
+           if (squares[a] === computerSign && squares[b] === computerSign && !squares[c]) {
+             squares[c] = computerSign;
+             console.log('1 ' + squares[a], squares[b], squares[c]);
+             this.setSquares(squares);
+             this.winGame(squares[a], squares[b], squares[c]);
+             return;
+           }
+           if (squares[a] === computerSign && squares[c] === computerSign && !squares[b]) {
+             squares[b] = computerSign;
+             console.log('2 ' + squares[a], squares[c], squares[b]);
+             this.setSquares(squares);
+             this.winGame(squares[a], squares[b], squares[c]);
+             return;
+           }
+           if (squares[b] === computerSign && squares[c] === computerSign && !squares[a]) {
+             squares[a] = computerSign;
+             console.log('3 ' + squares[b], squares[c], squares[a]);
+             this.setSquares(squares);
+             this.winGame(squares[a], squares[b], squares[c]);
+             return;
+           }
+         }
+
+         for (let i = 0; i < lineLength; i++) {
+           const [a, b, c] = lines[i];
+           if (squares[a] === playerSign && squares[b] === playerSign && !squares[c]) {
+             squares[c] = computerSign;
+             this.setSquares(squares);
+             return;
+           }
+           if (squares[a] === playerSign && squares[c] === playerSign && !squares[b]) {
+             squares[b] = computerSign;
+             this.setSquares(squares);
+             return;
+           }
+           if (squares[b] === playerSign && squares[c] === playerSign && !squares[a]) {
+             squares[a] = computerSign;
+             this.setSquares(squares);
+             return;
+           }
+         }*!/
+
+ /!*
+     if (!squares[middle]) {
+       squares[middle] = computerSign;
+       this.setSquares(squares);
+       return;
+     }
+ *!/
+
+ /!*    setTimeout( () => {
+       this.randomCorner();
+     }, 0);*!/
+
+   };
+ */
+
+  checkSquares = (player, attack, defence) => {
     const squares = this.state.squares.slice(),
         length = squares.length,
         middle = (length - 1) / 2,
         computerSign = this.props.computerSign,
         playerSign = this.props.playerSign,
-        isComputer = this.state.isComputer,
         lines = [
           [0, 1, 2],
           [3, 4, 5],
@@ -84,91 +194,18 @@ export class PlayGround extends Component {
         ],
         lineLength = lines.length;
 
-    if (!isComputer) return;
-
-    this.checkSquares(false, true);
-
-    /*    for (let i = 0; i < lineLength; i++) {
-          const [a, b, c] = lines[i];
-          if (squares[a] === computerSign && squares[b] === computerSign && !squares[c]) {
-            squares[c] = computerSign;
-            console.log('1 ' + squares[a], squares[b], squares[c]);
-            this.setSquares(squares);
-            this.winGame(squares[a], squares[b], squares[c]);
-            return;
-          }
-          if (squares[a] === computerSign && squares[c] === computerSign && !squares[b]) {
-            squares[b] = computerSign;
-            console.log('2 ' + squares[a], squares[c], squares[b]);
-            this.setSquares(squares);
-            this.winGame(squares[a], squares[b], squares[c]);
-            return;
-          }
-          if (squares[b] === computerSign && squares[c] === computerSign && !squares[a]) {
-            squares[a] = computerSign;
-            console.log('3 ' + squares[b], squares[c], squares[a]);
-            this.setSquares(squares);
-            this.winGame(squares[a], squares[b], squares[c]);
-            return;
-          }
-        }
-
-        for (let i = 0; i < lineLength; i++) {
-          const [a, b, c] = lines[i];
-          if (squares[a] === playerSign && squares[b] === playerSign && !squares[c]) {
-            squares[c] = computerSign;
-            this.setSquares(squares);
-            return;
-          }
-          if (squares[a] === playerSign && squares[c] === playerSign && !squares[b]) {
-            squares[b] = computerSign;
-            this.setSquares(squares);
-            return;
-          }
-          if (squares[b] === playerSign && squares[c] === playerSign && !squares[a]) {
-            squares[a] = computerSign;
-            this.setSquares(squares);
-            return;
-          }
-        }*/
-
-    if (!squares[middle]) {
-      squares[middle] = computerSign;
-      this.setSquares(squares);
-      return;
-    }
-
-    this.randomCorner();
-  };
-
-
-  checkSquares = (player, attack, defence) => {
-    const squares = this.state.squares.slice(),
-        length = squares.length,
-        computerSign = this.props.computerSign,
-        playerSign = this.props.playerSign,
-        lines = [
-          [0, 1, 2],
-          [3, 4, 5],
-          [6, 7, 8],
-          [0, 3, 6],
-          [1, 4, 7],
-          [2, 5, 8],
-          [0, 4, 8],
-          [2, 4, 6],
-        ],
-        lineLength = lines.length;
+    console.log('check squares');
 
     for (let i = 0; i < lineLength; ++i) {
       const [a, b, c] = lines[i];
 
-      console.log(i, lineLength);
+      //  console.log(i, lineLength);
 
       if (attack) {
 
         /*        squares[a], squares[b], squares[c]*/
 
-        console.log('attack', 'lines ' + lines[i]);
+        //  console.log('attack', 'lines ' + lines[i]);
 
         if (squares[a] === computerSign && squares[b] === computerSign && !squares[c]) {
           squares[c] = computerSign;
@@ -176,6 +213,7 @@ export class PlayGround extends Component {
           this.winGame(squares[a], squares[b], squares[c]);
           console.log(lines[i]);
           console.log('1 ' + 'a ' + squares[a], 'b ' + squares[b], 'c ' + squares[c]);
+          this.signPlaced = true;
           return;
         }
         if (squares[a] === computerSign && squares[c] === computerSign && !squares[b]) {
@@ -184,6 +222,7 @@ export class PlayGround extends Component {
           this.winGame(squares[a], squares[b], squares[c]);
           console.log(lines[i]);
           console.log('2 ' + 'a ' + squares[a], 'c ' + squares[c], 'b ' + squares[b]);
+          this.signPlaced = true;
           return;
         }
         if (squares[b] === computerSign && squares[c] === computerSign && !squares[a]) {
@@ -192,6 +231,7 @@ export class PlayGround extends Component {
           this.winGame(squares[a], squares[b], squares[c]);
           console.log(lines[i]);
           console.log('3 ' + 'b ' + squares[b], 'c ' + squares[c], 'a ' + squares[a]);
+          this.signPlaced = true;
           return;
         }
         /*        if (i === lineLength) {
@@ -206,16 +246,19 @@ export class PlayGround extends Component {
         if (squares[a] === playerSign && squares[b] === playerSign && !squares[c]) {
           squares[c] = computerSign;
           this.setSquares(squares);
+          this.signPlaced = true;
           return;
         }
         if (squares[a] === playerSign && squares[c] === playerSign && !squares[b]) {
           squares[b] = computerSign;
           this.setSquares(squares);
+          this.signPlaced = true;
           return;
         }
         if (squares[b] === playerSign && squares[c] === playerSign && !squares[a]) {
           squares[a] = computerSign;
           this.setSquares(squares);
+          this.signPlaced = true;
           return;
         }
         /*        if (i === lineLength) {
@@ -225,7 +268,9 @@ export class PlayGround extends Component {
 
       if (player) {
 
-        console.log('player', 'lines ' + lines[i]);
+        //  console.log('player', 'lines ' + lines[i]);
+
+        console.log('player');
 
         if (squares[a] === playerSign && squares[b] === playerSign && squares[c] === playerSign) {
           squares[a] = computerSign;
@@ -234,11 +279,10 @@ export class PlayGround extends Component {
             isComputer: currentState.isComputer = !this.state.isComputer
           }));
           this.winGame(squares[a], squares[b], squares[c]);
+          this.signPlaced = true;
           return;
         }
       }
-
-
     }
 
 
@@ -260,7 +304,7 @@ export class PlayGround extends Component {
 
   playAgain = () => {
     const {computerSign} = this.props;
-
+    this.signPlaced = false;
     this.cellRefs.map((item) => {
       item.classList.remove('signBox-appear-active');
     });
@@ -285,6 +329,8 @@ export class PlayGround extends Component {
         this.cellRefs[index].className += ' signBox-appear-active';
       }
     });
+
+    console.log('set squares');
 
     /*    this.setState(currentState => ({
           squares: currentState.squares = squares,
