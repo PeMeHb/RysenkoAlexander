@@ -1,7 +1,7 @@
 const Controller = require('./controller');
 const db = require('../db');
 
-const fields = ['email', 'firstName', 'lastName', 'password', 'id', 'sid'];
+const fields = ['email', 'firstName', 'lastName', 'password', 'id', 'sid', 'X', '0'];
 
 class User extends Controller {
   constructor(name) {
@@ -9,6 +9,8 @@ class User extends Controller {
 
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
+    this.getCounter = this.getCounter.bind(this);
+    this.updateCount = this.updateCount.bind(this);
   }
 
   async create(ctx, next) {
@@ -19,7 +21,7 @@ class User extends Controller {
       ctx.body = { error: 'Not unique email' };
     } else {
       this.clearUser(ctx.request.body);
-      await super.create(ctx, next);
+      await super.create(ctx, next)
     }
   }
 
@@ -48,6 +50,44 @@ class User extends Controller {
     delete response.sid;
     delete response.password;
     ctx.body = await db.write(this.name, users, response);
+
+    await next();
+  }
+
+  async getCounter(ctx) {
+    const gameData = await this.getValue();
+    const cookie = ctx.cookies.get('ECSID');
+    try {
+      const user = gameData.find(item => item.sid && cookie === item.sid);
+
+      if (user) {
+        delete user.sid;
+        ctx.body = user;
+      } else {
+        ctx.status = 404;
+        ctx.body = { error: 'User is not authenticated' };
+      }
+    } catch (e) {
+      console.log('Error get user', e);
+    }
+  }
+
+  async updateCount(ctx, next) {
+    const oldCounts = await this.getValue();
+    const newCount = ctx.request.body;
+    const cookie = ctx.cookies.get('ECSID');
+    try {
+      const userCount = oldCounts.find(item => item.sid && cookie === item.sid);
+      if (userCount) {
+        Object.assign(userCount, newCount);
+        ctx.body = await db.write(this.name, oldCounts);
+      } else {
+        ctx.status = 404;
+        ctx.body = { error: 'User is not authenticated' };
+      }
+    } catch (e) {
+      console.log('Error get user', e);
+    }
 
     await next();
   }

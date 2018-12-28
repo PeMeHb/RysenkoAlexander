@@ -32,8 +32,9 @@ module.exports = (app) => {
   _.get('/users/:id', users.getById);
   _.post('/public/user', users.create);
   _.put('/user', users.update);
-  _.get('/game', game.getCounter);
-  _.put('/game', game.updateCount);
+//  _.post('/public/user', game.createCounter);
+  _.get('/users', users.getCounter);
+  _.put('/users', users.updateCount);
   _.get('/info', tasks.getInfo);
 
   createCommonRoutes({ routeController: tasks, name: 'tasks', allPrivate: true });
@@ -43,6 +44,8 @@ module.exports = (app) => {
   createCommonRoutes({ routeController: products, name: 'products' });
 
   createCommonRoutes({ routeController: game, name: 'game' });
+
+  createCommonRoutes({ routeController: users, name: 'users' });
 
   app.use(_.routes());
 

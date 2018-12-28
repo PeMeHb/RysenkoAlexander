@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export const Persons = ({ users, clickHandler }) => (
   <ul>{users.map(user => (
     <li
-      key={user.age}
+      key={user.name}
       onClick={() => clickHandler(user)}
     >
       {user.name}
@@ -18,7 +18,6 @@ Persons.defaultProps = {
 };
 
 const userType = PropTypes.shape({
-  age: PropTypes.number,
   name: PropTypes.string
 });
 

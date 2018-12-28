@@ -3,13 +3,14 @@ import ReactModal from 'react-modal';
 import { connect } from 'react-redux';
 
 import { getTasksInfo } from '../../services/tasksService';
-import { setInfo } from '../../store';
+import { getCounter } from '../../services/userService';
+import { setInfo, addGame } from '../../store';
 
 import './main.scss';
 
 export class MainComponent extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       openModal: false
     };
@@ -18,6 +19,8 @@ export class MainComponent extends Component {
   componentDidMount() {
     getTasksInfo()
       .then(this.props.setInfo);
+    getCounter()
+        .then(this.props.addGame);
   }
 
   updateModal(isOpen) {
@@ -26,7 +29,7 @@ export class MainComponent extends Component {
 
   render() {
     const { user, info } = this.props;
-
+    console.log(user.X.gameCounter);
     return (
       <React.Fragment>
         <h1>Hello, {user.firstName}</h1>
@@ -34,7 +37,7 @@ export class MainComponent extends Component {
         {
           info &&
           <article>
-            <p>You have <strong>{info.total}</strong> tasks</p>
+            <p>You have finished <strong>{user['X'].gameCounter + user['0'].gameCounter}</strong> total games</p>
             <p>Done: <strong>{info.done}</strong></p>
             <p>In progress: <strong>{info.inProgress}</strong></p>
             <p>Waiting: <strong>{info.waiting}</strong></p>
@@ -58,13 +61,16 @@ export class MainComponent extends Component {
   }
 }
 
-const mapState = ({ user, info }) => ({
+
+const mapState = ({ user, info, gameCounter }) => ({
   user,
-  info
+  info,
+  gameCounter
 });
 
 const mapDispatch = {
-  setInfo
+  setInfo,
+  addGame
 };
 
 export const Main = connect(mapState, mapDispatch)(MainComponent);

@@ -5,10 +5,10 @@ import './navigation.scss';
 
 const items = [
   { label: 'Home', id: 'home' },
-  { label: 'Tasks', id: 'tasks', auth: true },
-  { label: 'User', id: 'user' },
-  { label: 'Register new', id: 'registernew', nonauth: true },
-  { label: 'Game', id: 'game'}
+//  { label: 'Tasks', id: 'tasks', auth: true },
+  { label: 'User', id: 'user', auth: true},
+  { label: 'Table Results', id: 'table', auth: true},
+  { label: 'Game', id: 'game', auth: true}
 ];
 
 export const Navigation = ({ user }) => {

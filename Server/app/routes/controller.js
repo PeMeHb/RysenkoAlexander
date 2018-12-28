@@ -40,8 +40,16 @@ module.exports = class Controller {
   async create(ctx, next) {
     const newItem = ctx.request.body;
     const data = await this.getValue();
+    let idArray = [],
+        lastId;
 
-    newItem.id = Date.now();
+    data.forEach((item) => {
+      idArray.push(item.id);
+    });
+
+    lastId = Math.max.apply(Math, idArray);
+
+    newItem.id = lastId + 1;
     data.push(newItem);
 
     ctx.body = await db.write(this.name, data, newItem);

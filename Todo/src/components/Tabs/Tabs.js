@@ -1,8 +1,9 @@
+import React, {Component} from 'react';
 import { TabContent, Tab, Tablink, TabNav } from './';
 
 import './tabs.scss';
 
-export class Tabs extends React.Component {
+export class Tabs extends Component {
   constructor(props) {
     super(props);
     this.state = { id: 0 };
@@ -10,7 +11,7 @@ export class Tabs extends React.Component {
 
   clickTab = (id) => {
     this.setState({ id });
-  }
+  };
 
   render() {
     const tabs = this.props.children

@@ -1,3 +1,5 @@
+import React, {Component} from 'react';
+
 import './form.scss';
 
 export class Form extends Component {
@@ -8,8 +10,8 @@ export class Form extends Component {
       { label: 'email', reg: /^\w+@\w+\.[a-z]{2,}$/ },
       { label: 'firstName', reg: /^[^ ]{3,20}$/ },
       { label: 'lastName', reg: /^[^ ]{3,20}$/ },
-      { label: 'password', reg: /^[^ ]{6,20}$/, secure: true },
-      { label: 'repeat password', reg: /^[^ ]{6,20}$/, secure: true }
+      { label: 'password', reg: /^[^ ]{4,20}$/, secure: true },
+      { label: 'repeat password', reg: /^[^ ]{4,20}$/, secure: true }
     ];
 
     const { data } = this.props;
@@ -55,7 +57,13 @@ export class Form extends Component {
   }
 
   saveUser = (e) => {
-    const data = {};
+    let data = {},
+        gameFields = {
+          gameCounter: 0,
+          winGames: 0,
+          loseGames: 0,
+          drawGames: 0,
+        };
 
     this.fields
       .filter(this.filterExcluded)
@@ -64,6 +72,11 @@ export class Form extends Component {
           data[field.label] = this.state[field.label].value;
         }
       });
+
+    if (!data['X'] || !data['0']) {
+      data['X'] = gameFields;
+      data['0'] = gameFields;
+    }
 
     this.props.submit(data);
     e.preventDefault();
@@ -132,6 +145,7 @@ export class Form extends Component {
         <input
           type="submit"
           value="Ok"
+          className="start-button"
           disabled={this.getDisabledState()}
         />
       </form>

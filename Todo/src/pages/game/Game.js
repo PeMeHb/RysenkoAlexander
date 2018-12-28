@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import {connect} from "react-redux";
 
-import {createCount, updateCount, getCounter} from '../../services/gameService';
+// import {createCount, updateCount, getCounter} from '../../services/gameService';
+import {updateCount, getCounter} from '../../services/userService';
 import {addGame, gameCounter} from '../../store';
 import {ChooseSign} from '../../pages/chooseSign';
 import {PlayGround} from '../../pages/playGround'
@@ -98,8 +99,6 @@ export const Game = connect(mapState, mapDispatch)(GameMod);
 
 
 /*
-
-
 
 export class Game extends Component {
   constructor() {

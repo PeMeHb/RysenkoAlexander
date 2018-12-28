@@ -9,3 +9,7 @@ export const create = data => request('public/user', 'post', data);
 export const logout = () => request('logout');
 
 export const update = data => request('user', 'put', data);
+
+export const updateCount = data => request( 'user' ,'put', data);
+
+export const getCounter = () => request('user', 'get');
