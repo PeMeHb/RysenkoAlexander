@@ -22,7 +22,7 @@ const createCommonRoutes = (opts) => {
 };
 
 module.exports = (app) => {
-  const { users, tasks, categories, products, game } = require('./routes');
+  const { users } = require('./routes');
 
   _.get('/', (ctx) => {
     ctx.body = { data: 'Hello User' };
@@ -32,18 +32,8 @@ module.exports = (app) => {
   _.get('/users/:id', users.getById);
   _.post('/public/user', users.create);
   _.put('/user', users.update);
-//  _.post('/public/user', game.createCounter);
   _.get('/users', users.getCounter);
   _.put('/users', users.updateCount);
-  _.get('/info', tasks.getInfo);
-
-  createCommonRoutes({ routeController: tasks, name: 'tasks', allPrivate: true });
-
-  createCommonRoutes({ routeController: categories, name: 'categories' });
-
-  createCommonRoutes({ routeController: products, name: 'products' });
-
-  createCommonRoutes({ routeController: game, name: 'game' });
 
   createCommonRoutes({ routeController: users, name: 'users' });
 

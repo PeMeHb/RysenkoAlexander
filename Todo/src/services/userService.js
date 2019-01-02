@@ -10,6 +10,6 @@ export const logout = () => request('logout');
 
 export const update = data => request('user', 'put', data);
 
-export const updateCount = data => request( 'user' ,'put', data);
+export const updateCount = data => request( 'users' ,'put', data);
 
-export const getCounter = () => request('user', 'get');
+export const getCounter = () => request('users', 'get');

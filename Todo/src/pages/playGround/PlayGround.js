@@ -9,6 +9,7 @@ import {store, addGame} from '../../store';*/
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import './playGround.scss';
+// import {gameCounter} from "../../store";
 
 export class PlayGround extends Component {
   constructor(props) {
@@ -166,7 +167,7 @@ export class PlayGround extends Component {
 
 
   winGame = (player) => {
-    const {gameCounter, user} = this.props;
+    const { user } = this.props;
 
     if (player === 'computer') {
       this.popupText = `Computer win`;
@@ -186,8 +187,16 @@ export class PlayGround extends Component {
       playAgain: !currentState.playAgain,
     }));*/
 
-    let newCounter = {...gameCounter, counter: gameCounter.counter + 1};
+  //  let newCounter = {...user, counter: gameCounter.counter + 1};
+
+ /* X:{gameCounter: user['X'].gameCounter + 1} */
+
+    let newCounter = {...user, gameCounter: user['X'].gameCounter + 1};
+
+    console.log(newCounter, user);
+
     this.props.changeCounter(newCounter);
+
     this.gameFinished = true;
   };
 
@@ -241,7 +250,7 @@ export class PlayGround extends Component {
 
     });
 
-    console.log('isComputer ', this.state.isComputer);
+  //  console.log('isComputer ', this.state.isComputer);
 
     this.setState({
       squares: squares,

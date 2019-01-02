@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import './popup.scss';
-import {getCounter} from "../../services/gameService";
 
 export class Popup extends Component {
   constructor(props) {

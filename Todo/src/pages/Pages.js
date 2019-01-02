@@ -1,13 +1,12 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
-import { TaskList } from '../pages/TaskList';
 import { Main } from '../partials/main';
 import { Login } from '../pages/login';
-import { Task } from '../pages/Task';
 import { UpdateUser } from '../pages/updateUser';
 import { CreateUser } from '../pages/createUser';
 import { Success } from '../pages/success';
+import { Table } from '../pages/table';
 import { Game } from '../pages/game';
 
 export const Pages = ({ user, setLoginState }) => {
@@ -38,9 +37,8 @@ export const Pages = ({ user, setLoginState }) => {
     <Switch>
       <Route path="/" exact component={Main} />
       <Route path="/home" exact component={Main} />
-      <Route path="/tasks" exact component={TaskList} />
-      <Route path="/tasks/:task" component={Task} />
       <Route path="/user" render={() => <UpdateUser user={user} />} />
+      <Route path="/table results" exact component={Table} />
       <Route path="/game" exact component={Game} />
       <Redirect from="/login" to="/" />
     </Switch>

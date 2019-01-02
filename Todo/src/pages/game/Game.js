@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import {connect} from "react-redux";
 
-// import {createCount, updateCount, getCounter} from '../../services/gameService';
 import {updateCount, getCounter} from '../../services/userService';
-import {addGame, gameCounter} from '../../store';
+import {addInfo} from '../../store';
 import {ChooseSign} from '../../pages/chooseSign';
 import {PlayGround} from '../../pages/playGround'
 
@@ -54,27 +53,31 @@ export class GameMod extends Component {
 
   componentDidMount() {
     getCounter()
-        .then(this.props.addGame);
+        .then(this.props.addInfo);
   }
 
   changeCounter = (counter) => {
-    updateCount(counter)
-        .then(this.props.addGame(counter));
+/*    updateCount(counter)
+        .then(this.props.addInfo(counter));*/
   };
 
   render() {
-    const { user, gameCounter } = this.props,
+    const { user } = this.props,
           { playerSign, computerSign, startGame } = this.state;
 
     return (
-        gameCounter &&
+        user &&
         <section className="section">
           <h1 className="section__title">{user.firstName}</h1>
-          <h2 className="section__title">{gameCounter.counter}</h2>
+            <article>
+              <p>You have finished <strong>{user['X'].gameCounter + user['0'].gameCounter}</strong> total games</p>
+              <p>Total win games: <strong>{user['X'].winGames + user['0'].winGames}</strong></p>
+              <p>Total lose games: <strong>{user['X'].loseGames + user['0'].loseGames}</strong></p>
+              <p>Total draw games: <strong>{user['X'].drawGames + user['0'].drawGames}</strong></p>
+            </article>
           <ChooseSign playerSign={this.chooseSign} startGame={this.startGame}/>
           <PlayGround
               user={user}
-              gameCounter={gameCounter}
               playerSign={playerSign}
               computerSign={computerSign}
               startGame={startGame}
@@ -86,13 +89,12 @@ export class GameMod extends Component {
   }
 }
 
-const mapState = ({user, gameCounter}) => ({
+const mapState = ({ user }) => ({
   user,
-  gameCounter
 });
 
 const mapDispatch = {
-  addGame
+  addInfo
 };
 
 export const Game = connect(mapState, mapDispatch)(GameMod);

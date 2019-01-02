@@ -5,7 +5,6 @@ import './navigation.scss';
 
 const items = [
   { label: 'Home', id: 'home' },
-//  { label: 'Tasks', id: 'tasks', auth: true },
   { label: 'User', id: 'user', auth: true},
   { label: 'Table Results', id: 'table', auth: true},
   { label: 'Game', id: 'game', auth: true}

@@ -21,7 +21,6 @@ export class ChooseSign extends Component {
   };
 
   handleSubmit = (event) => {
-  //  console.log(this.state.signChoosed, this.state.activatePopup);
     if (this.state.signChoosed) {
       this.props.startGame(true);
     } else {
