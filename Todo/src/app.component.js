@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
@@ -10,9 +10,9 @@ import { setUser } from './store';
 import './app.scss';
 
 export class AppComponent extends Component {
-  constructor(props) {
-    super(props);
-  }
+  /*  constructor(props) {
+      super(props);
+    } */
 
   componentDidMount() {
     checkUser()
@@ -34,11 +34,14 @@ export class AppComponent extends Component {
         />
         <main className="main">
           {
-            user !== null ?
-              <Pages
-                user={user}
-                setLoginState={this.setLoginState}
-              /> : <div>Loading...</div>
+            user !== null
+              ? (
+                <Pages
+                  user={user}
+                  setLoginState={this.setLoginState}
+                />
+              )
+              : <div>Loading...</div>
           }
         </main>
       </React.Fragment>

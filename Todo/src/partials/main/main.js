@@ -1,49 +1,48 @@
-import React, {Component} from 'react';
-import ReactModal from 'react-modal';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import { getCounter } from '../../services/userService';
-import { addInfo } from '../../store';
 
 import './main.scss';
 
 export class MainComponent extends Component {
   constructor(props) {
     super(props);
-/*    this.state = {
-      openModal: false
-    };*/
+    /*    this.state = {
+          openModal: false
+        }; */
   }
 
   componentDidMount() {
-/*    getTasksInfo()
-      .then(this.props.setInfo);*/
-/*    getCounter()
-      .then(this.props.addGame);*/
+    /*    getTasksInfo()
+          .then(this.props.setInfo); */
+    /*    getCounter()
+          .then(this.props.addGame); */
   }
 
-/*  updateModal(isOpen) {
-    this.setState({ openModal: isOpen });
-  }*/
+  /*  updateModal(isOpen) {
+      this.setState({ openModal: isOpen });
+    } */
 
   render() {
     const { user } = this.props;
-    console.log(user);
+
     return (
       <React.Fragment>
-        <h1 className="main-title">Hello, {user.firstName}</h1>
-
+        <h1 className="main-title">
+          {['Hello ', user.firstName]}
+        </h1>
         {
-          user &&
-          <article>
-            <p>You have finished <strong>{user['X'].gameCounter + user['0'].gameCounter}</strong> total games</p>
-            <p>Total win games: <strong>{user['X'].winGames + user['0'].winGames}</strong></p>
-            <p>Total lose games: <strong>{user['X'].loseGames + user['0'].loseGames}</strong></p>
-            <p>Total draw games: <strong>{user['X'].drawGames + user['0'].drawGames}</strong></p>
-          </article>
+          user
+          && (
+            <article>
+              <p>{['You have finished ', <strong>{user['X'].gameCounter + user['0'].gameCounter}</strong>, ' total games']}</p>
+              <p>{['Total win games: ', <strong>{user['X'].winGames + user['0'].winGames}</strong>]}</p>
+              <p>{['Total lose games: ', <strong>{user['X'].loseGames + user['0'].loseGames}</strong>]}</p>
+              <p>{['Total draw games: ', <strong>{user['X'].drawGames + user['0'].drawGames}</strong>]}</p>
+            </article>
+          )
         }
 
-{/*        <ReactModal
+        {/*        <ReactModal
           isOpen={this.state.openModal}
           contentLabel="Minimal Modal Example"
           shouldCloseOnEsc={true}
@@ -53,7 +52,7 @@ export class MainComponent extends Component {
         >
           <p>Hello</p>
           <button onClick={() => this.updateModal(false)}>Close</button>
-        </ReactModal>*/}
+        </ReactModal> */}
 
       </React.Fragment>
     );
@@ -61,16 +60,12 @@ export class MainComponent extends Component {
 }
 
 
-const mapState = ({ user, info, gameInfo }) => ({
+const mapState = ({ user }) => ({
   user,
-/*  gameInfo*/
-/*  info,*/
-/*  gameCounter*/
 });
 
 const mapDispatch = {
-/*  setInfo,*/
- // addInfo
+  // addInfo
 };
 
 export const Main = connect(mapState, mapDispatch)(MainComponent);

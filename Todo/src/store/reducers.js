@@ -1,12 +1,21 @@
-import { SET_USER, ADD_INFO} from './actions';
+import { SET_USER, GET_ALL } from './actions';
 
 export const user = (state = null, action) => {
   switch (action.type) {
     case SET_USER: {
       return action.payload;
     }
-    case ADD_INFO: {
-      return  Object.assign( ...state, { ...action.payload });
+  }
+
+  return state;
+};
+
+export const users = (state = [], action) => {
+  switch (action.type) {
+    case GET_ALL: {
+      return action.payload;
+/*      return Object.assign(state, {...action.payload});*/
+/*      return Object.assign(...state, { ...action.payload });*/
     }
   }
 

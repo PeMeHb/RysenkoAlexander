@@ -2,12 +2,12 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import { Main } from '../partials/main';
-import { Login } from '../pages/login';
-import { UpdateUser } from '../pages/updateUser';
-import { CreateUser } from '../pages/createUser';
-import { Success } from '../pages/success';
-import { Table } from '../pages/table';
-import { Game } from '../pages/game';
+import { Login } from './login';
+import { UpdateUser } from './updateUser';
+import { CreateUser } from './createUser';
+import { Success } from './success';
+import { Table } from './table';
+import { Game } from './game';
 
 export const Pages = ({ user, setLoginState }) => {
   if (!user) {

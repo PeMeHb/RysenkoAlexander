@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import './form.scss';
 
@@ -26,10 +26,10 @@ export class Form extends Component {
   };
 
   setFieldState(e, index) {
-    const field = this.fields[index];
-    const { name, value } = e.target;
-    const stateField = this.state[name];
-    const isRepeatPasswordShown = !this.props.exclude.includes('repeat password');
+    const field = this.fields[index],
+      { name, value } = e.target,
+      stateField = this.state[name],
+      isRepeatPasswordShown = !this.props.exclude.includes('repeat password');
 
     if (isRepeatPasswordShown && name.includes('password') && !stateField.error) {
       const fields = this.fields.filter(field => field.label.includes('password'));
@@ -57,13 +57,13 @@ export class Form extends Component {
   }
 
   saveUser = (e) => {
-    let data = {},
-        gameFields = {
-          gameCounter: 0,
-          winGames: 0,
-          loseGames: 0,
-          drawGames: 0,
-        };
+    const data = {},
+      gameFields = {
+        gameCounter: 0,
+        winGames: 0,
+        loseGames: 0,
+        drawGames: 0,
+      };
 
     this.fields
       .filter(this.filterExcluded)
@@ -138,7 +138,8 @@ export class Form extends Component {
                   onBlur={e => this.setFieldState(e, index)}
                 />
                 {state[field.label].error && <span>{state[field.label].error}</span>}
-              </li>))
+              </li>
+            ))
           }
         </ul>
 

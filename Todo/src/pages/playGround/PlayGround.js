@@ -1,15 +1,8 @@
-import React, {Component} from 'react';
-
-import {Popup} from '../popup';
-/*import {GameMod} from '../game';
-import {withRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {getCounter, updateCount} from '../../services/gameService';
-import {store, addGame} from '../../store';*/
+import React, { Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { Popup } from '../popup';
 
 import './playGround.scss';
-// import {gameCounter} from "../../store";
 
 export class PlayGround extends Component {
   constructor(props) {
@@ -18,7 +11,7 @@ export class PlayGround extends Component {
     this.popupText = '';
     this.gameFinished = false;
     this.cellRefs = [];
-    this.getRefs = element => {
+    this.getRefs = (element) => {
       this.cellRefs.push(element);
     };
 
@@ -31,8 +24,8 @@ export class PlayGround extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {startGame, computerSign} = this.props;
-    if (prevProps.startGame !== startGame && computerSign === "X") {
+    const { startGame, computerSign } = this.props;
+    if (prevProps.startGame !== startGame && computerSign === 'X') {
       this.setState(currentState => ({
         isComputer: !currentState.isComputer,
       }), () => this.checkSquares(false, true));
@@ -40,11 +33,8 @@ export class PlayGround extends Component {
   }
 
   onClick = (event) => {
-    const {squares, isComputer} = this.state,
-        {playerSign, computerSign, startGame} = this.props;
-
-
-  //  console.log('isComputer ' + isComputer, ' startGame ' + startGame,  ' playerS ' + playerSign,  ' computerS ' + computerSign);
+    const { squares, isComputer } = this.state,
+      { playerSign, computerSign, startGame } = this.props;
 
     if (!playerSign || !computerSign) {
       this.popupText = ['You need to pick your sign first ', <b>X</b>, ' or ', <b>O</b>];
@@ -61,14 +51,14 @@ export class PlayGround extends Component {
     this.checkSquares(false, true);
     /*    setTimeout( () => {
           this.checkSquares(false, true);
-        }, 0);*/
+        }, 0); */
   };
 
   randomCorner = () => {
     const squares = this.state.squares.slice(),
-        corners = [0, 1, 2, 3, 5, 6, 7, 8];
+      corners = [0, 1, 2, 3, 5, 6, 7, 8];
     if (!squares[0] || !squares[1] || !squares[2] || !squares[3] || !squares[5] || !squares[6] || !squares[7] || !squares[8]) {
-      let randomCorner = Math.floor(Math.random() * corners.length);
+      const randomCorner = Math.floor(Math.random() * corners.length);
       if (!squares[corners[randomCorner]]) {
         squares[corners[randomCorner]] = this.props.computerSign;
         this.setSquares(squares);
@@ -79,25 +69,24 @@ export class PlayGround extends Component {
   };
 
   checkSquares = (player, attack, defence) => {
-
     if (this.gameFinished) return;
 
     const squares = this.state.squares.slice(),
-        length = squares.length,
-        middle = (length - 1) / 2,
-        computerSign = this.props.computerSign,
-        playerSign = this.props.playerSign,
-        lines = [
-          [0, 1, 2],
-          [3, 4, 5],
-          [6, 7, 8],
-          [0, 3, 6],
-          [1, 4, 7],
-          [2, 5, 8],
-          [0, 4, 8],
-          [2, 4, 6],
-        ],
-        lineLength = lines.length;
+      length = squares.length,
+      middle = (length - 1) / 2,
+      computerSign = this.props.computerSign,
+      playerSign = this.props.playerSign,
+      lines = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+      ],
+      lineLength = lines.length;
 
     if (!squares[middle] && attack) {
       squares[middle] = computerSign;
@@ -109,7 +98,6 @@ export class PlayGround extends Component {
       const [a, b, c] = lines[i];
 
       if (attack) {
-
         if (squares[a] === computerSign && squares[b] === computerSign && !squares[c]) {
           squares[c] = computerSign;
           this.setSquares(squares);
@@ -134,7 +122,6 @@ export class PlayGround extends Component {
       }
 
       if (defence) {
-
         if (squares[a] === playerSign && squares[b] === playerSign && !squares[c]) {
           squares[c] = computerSign;
           this.setSquares(squares);
@@ -162,19 +149,17 @@ export class PlayGround extends Component {
         }
       }
     }
-
   };
-
 
   winGame = (player) => {
     const { user } = this.props;
 
     if (player === 'computer') {
-      this.popupText = `Computer win`;
+      this.popupText = 'Computer win';
     } else if (player === 'player') {
       this.popupText = `${user.firstName} win`;
     } else {
-      this.popupText = `Draw`;
+      this.popupText = 'Draw';
     }
 
     this.showPopup();
@@ -183,17 +168,17 @@ export class PlayGround extends Component {
       playAgain: !this.state.playAgain,
     });
 
-/*    this.setState(currentState => ({
-      playAgain: !currentState.playAgain,
-    }));*/
+    /*    this.setState(currentState => ({
+          playAgain: !currentState.playAgain,
+        })); */
 
-  //  let newCounter = {...user, counter: gameCounter.counter + 1};
+    //  let newCounter = {...user, counter: gameCounter.counter + 1};
 
- /* X:{gameCounter: user['X'].gameCounter + 1} */
+    /* X:{gameCounter: user['X'].gameCounter + 1} */
 
-    let newCounter = {...user, gameCounter: user['X'].gameCounter + 1};
+    const newCounter = { ...user, gameCounter: user['X'].gameCounter + 1 };
 
-    console.log(newCounter, user);
+    console.log(newCounter);
 
     this.props.changeCounter(newCounter);
 
@@ -201,7 +186,7 @@ export class PlayGround extends Component {
   };
 
   playAgain = () => {
-    const {computerSign} = this.props;
+    const { computerSign } = this.props;
     this.gameFinished = false;
     this.cellRefs.map((item) => {
       item.classList.remove('signBox-appear-active');
@@ -212,7 +197,7 @@ export class PlayGround extends Component {
       playAgain: !currentState.playAgain,
       squares: currentState.squares = Array(9).fill(null)
     }), () => {
-      if (computerSign === "X") {
+      if (computerSign === 'X') {
         this.checkSquares(false, true);
       }
     });
@@ -226,13 +211,12 @@ export class PlayGround extends Component {
           this.setState(currentState => ({
             isComputer: !currentState.isComputer
           }));
-        }*/
-
+        } */
   };
 
   setSquares = (squares) => {
     let i = 0,
-        length = squares.length;
+      length = squares.length;
     squares.forEach((item, index) => {
       if (item && !this.cellRefs[index].classList.contains('signBox-appear-active')) {
         this.cellRefs[index].className += ' signBox-appear-active';
@@ -247,21 +231,17 @@ export class PlayGround extends Component {
           }, 0);
         }
       }
-
     });
 
-  //  console.log('isComputer ', this.state.isComputer);
-
     this.setState({
-      squares: squares,
+      squares,
       isComputer: this.state.isComputer = !this.state.isComputer
     });
 
-/*        this.setState(currentState => ({
-          squares: currentState.squares = squares,
-          isComputer: currentState.isComputer = !this.state.isComputer,
-        }));*/
-
+    /*        this.setState(currentState => ({
+              squares: currentState.squares = squares,
+              isComputer: currentState.isComputer = !this.state.isComputer,
+            })); */
   };
 
   showPopup = () => {
@@ -276,156 +256,50 @@ export class PlayGround extends Component {
 
   render() {
 
-    const {squares, playAgain, activatePopup} = this.state;
+    const { squares, playAgain, activatePopup } = this.state;
 
     return (
-        <div className="playGround">
+      <div className="playGround">
 
-          <ReactCSSTransitionGroup
-              component="ul"
-              transitionName="signBox"
-              className="ground"
-              transitionAppear={true}
-              transitionAppearTimeout={500}
-              transitionEnter={false}
-              transitionLeave={false}
-          >
-            {
-              squares.map((box, boxIndex) => {
-                return (
-                    <li
-                        ref={this.getRefs}
-                        key={boxIndex}
-                        id={boxIndex}
-                        className="cell"
-                        onClick={this.onClick}
-                    >
-                      {box}
-                    </li>
-                )
-              })
-            }
-          </ReactCSSTransitionGroup>
-          <button
-              className="butt"
-              disabled={playAgain}
-              onClick={this.playAgain}
-          >
-            Play again
-          </button>
-          <Popup
-              activatePopup={activatePopup}
-              text={this.popupText}
-              delay={3000}
-          />
-        </div>
+        <ReactCSSTransitionGroup
+          component="ul"
+          transitionName="signBox"
+          className="ground"
+          transitionAppear={true}
+          transitionAppearTimeout={500}
+          transitionEnter={false}
+          transitionLeave={false}
+        >
+          {
+            squares.map((box, boxIndex) => {
+              return (
+                <li
+                  ref={this.getRefs}
+                  key={boxIndex}
+                  id={boxIndex}
+                  className="cell"
+                  onClick={this.onClick}
+                >
+                  {box}
+                </li>
+              );
+            })
+          }
+        </ReactCSSTransitionGroup>
+        <button
+          type="button"
+          className="butt"
+          disabled={playAgain}
+          onClick={this.playAgain}
+        >
+          {'Play again'}
+        </button>
+        <Popup
+          activatePopup={activatePopup}
+          text={this.popupText}
+          delay={3000}
+        />
+      </div>
     );
   }
 }
-
-/* computer = () => {
-   const squares = this.state.squares.slice(),
-       length = squares.length,
-       middle = (length - 1) / 2,
-       computerSign = this.props.computerSign,
-       playerSign = this.props.playerSign,
-       isComputer = this.state.isComputer,
-       lines = [
-         [0, 1, 2],
-         [3, 4, 5],
-         [6, 7, 8],
-         [0, 3, 6],
-         [1, 4, 7],
-         [2, 5, 8],
-         [0, 4, 8],
-         [2, 4, 6],
-       ],
-       lineLength = lines.length;
-
- //  if (!isComputer) return;
-
-
-
-   /!*    for (let i = 0; i < lineLength; i++) {
-         const [a, b, c] = lines[i];
-         if (squares[a] === computerSign && squares[b] === computerSign && !squares[c]) {
-           squares[c] = computerSign;
-           console.log('1 ' + squares[a], squares[b], squares[c]);
-           this.setSquares(squares);
-           this.winGame(squares[a], squares[b], squares[c]);
-           return;
-         }
-         if (squares[a] === computerSign && squares[c] === computerSign && !squares[b]) {
-           squares[b] = computerSign;
-           console.log('2 ' + squares[a], squares[c], squares[b]);
-           this.setSquares(squares);
-           this.winGame(squares[a], squares[b], squares[c]);
-           return;
-         }
-         if (squares[b] === computerSign && squares[c] === computerSign && !squares[a]) {
-           squares[a] = computerSign;
-           console.log('3 ' + squares[b], squares[c], squares[a]);
-           this.setSquares(squares);
-           this.winGame(squares[a], squares[b], squares[c]);
-           return;
-         }
-       }
-
-       for (let i = 0; i < lineLength; i++) {
-         const [a, b, c] = lines[i];
-         if (squares[a] === playerSign && squares[b] === playerSign && !squares[c]) {
-           squares[c] = computerSign;
-           this.setSquares(squares);
-           return;
-         }
-         if (squares[a] === playerSign && squares[c] === playerSign && !squares[b]) {
-           squares[b] = computerSign;
-           this.setSquares(squares);
-           return;
-         }
-         if (squares[b] === playerSign && squares[c] === playerSign && !squares[a]) {
-           squares[a] = computerSign;
-           this.setSquares(squares);
-           return;
-         }
-       }*!/
-
-/!*
-   if (!squares[middle]) {
-     squares[middle] = computerSign;
-     this.setSquares(squares);
-     return;
-   }
-*!/
-
-/!*    setTimeout( () => {
-     this.randomCorner();
-   }, 0);*!/
-
- };
-*/
-
-/*
-  computer = () => {
-
-    console.log('computer');
-
-    if (this.gameFinished) return;
-
-    const squares = this.state.squares.slice(),
-      length = squares.length,
-      middle = (length - 1) / 2,
-      computerSign = this.props.computerSign;
-
-    console.log('gameFinished', this.gameFinished);
-
-      if (!squares[middle]) {
-        squares[middle] = computerSign;
-        this.setSquares(squares);
-        return;
-      }
-
-    this.checkSquares(false, true);
-
-  };
-*/

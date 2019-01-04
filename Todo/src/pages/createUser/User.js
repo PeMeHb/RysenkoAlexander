@@ -7,7 +7,7 @@ export const CreateUser = (props) => {
   const userHandler = (data) => {
     create(data).then(() => {
       props.setLoginState();
-    //  props.history.push('/success');
+      //  props.history.push('/success');
     });
   };
 
