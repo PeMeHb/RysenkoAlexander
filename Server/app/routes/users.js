@@ -9,8 +9,10 @@ class User extends Controller {
 
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
-    this.getCounter = this.getCounter.bind(this);
-    this.updateCount = this.updateCount.bind(this);
+    this.getUsers = this.getUsers.bind(this);
+    /*    this.getCounter = this.getCounter.bind(this);
+        this.updateCount = this.updateCount.bind(this);*/
+
   }
 
   async create(ctx, next) {
@@ -54,43 +56,59 @@ class User extends Controller {
     await next();
   }
 
-  async getCounter(ctx) {
-    const gameData = await this.getValue();
-    const cookie = ctx.cookies.get('ECSID');
-    try {
-      const user = gameData.find(item => item.sid && cookie === item.sid);
+  async getUsers(ctx, next) {
+    const users = await db.get('users');
 
-      if (user) {
-        delete user.sid;
-        ctx.body = user;
-      } else {
-        ctx.status = 404;
-        ctx.body = { error: 'User is not authenticated' };
-      }
-    } catch (e) {
-      console.log('Error get user', e);
-    }
-  }
+    console.log(users);
 
-  async updateCount(ctx, next) {
-    const oldCounts = await this.getValue();
-    const newCount = ctx.request.body;
-    const cookie = ctx.cookies.get('ECSID');
-    try {
-      const userCount = oldCounts.find(item => item.sid && cookie === item.sid);
-      if (userCount) {
-        Object.assign(userCount, newCount);
-        ctx.body = await db.write(this.name, oldCounts);
-      } else {
-        ctx.status = 404;
-        ctx.body = { error: 'User is not authenticated' };
-      }
-    } catch (e) {
-      console.log('Error get user', e);
-    }
+/*    users.forEach((user) => {
+      delete user.sid;
+      delete user.password;
+    });*/
+
+    ctx.body = users;
 
     await next();
   }
+
+  /*  async getCounter(ctx) {
+      const gameData = await this.getValue();
+      const cookie = ctx.cookies.get('ECSID');
+      try {
+        const user = gameData.find(item => item.sid && cookie === item.sid);
+
+        if (user) {
+          delete user.sid;
+          delete user.password;
+          ctx.body = user;
+        } else {
+          ctx.status = 404;
+          ctx.body = { error: 'User is not authenticated' };
+        }
+      } catch (e) {
+        console.log('Error get user', e);
+      }
+    }
+
+    async updateCount(ctx, next) {
+      const oldCounts = await this.getValue();
+      const newCount = ctx.request.body;
+      const cookie = ctx.cookies.get('ECSID');
+      try {
+        const userCount = oldCounts.find(item => item.sid && cookie === item.sid);
+        if (userCount) {
+          Object.assign(userCount, newCount);
+          ctx.body = await db.write(this.name, oldCounts);
+        } else {
+          ctx.status = 404;
+          ctx.body = { error: 'User is not authenticated' };
+        }
+      } catch (e) {
+        console.log('Error get user', e);
+      }
+
+      await next();
+    }*/
 
   clearUser(user = {}) {
     Object.keys(user).forEach((key) => {

@@ -7,6 +7,13 @@
     "email": "iliatcymbal@gmail.com"
   },
   "dependencies": {
+    "babel-eslint": "^8.2.5",
+    "eslint": "^5.0.0",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.10.0",
     "jsonfile": "^4.0.0",
     "koa": ">=2.2.x",
     "koa-bodyparser": "^4.2.0",
