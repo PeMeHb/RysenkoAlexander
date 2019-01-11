@@ -1,52 +1,132 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ReactTable from "react-table";
+import "react-table/react-table.css";
 
 import { getUsers } from "../../services/userService";
-import { setAllUsers } from '../../store';
+import { getAllUsers, allUsers } from '../../store';
 
 
 import './table.scss';
+
 
 export class TableResult extends Component {
   constructor(props) {
     super(props);
   }
 
+    componentDidMount() {
+      getUsers()
+        .then(this.props.getAllUsers);
+    }
 
-  componentDidMount() {
-    getUsers()
-      .then(this.props.setAllUsers);
-  }
-
-  allUsers = () => {
-    const { getUsers } = this.props;
-/*    users.forEach((user) => {
-      delete user.sid;
-      delete user.password;
-      console.log(user)
-    });*/
+  setAllUsers = () => {
+    const { allUsers } = this.props;
+    console.log(allUsers);
+    /*    users.forEach((user) => {
+          delete user.sid;
+          delete user.password;
+          console.log(user)
+        });*/
   };
 
-
   render() {
-    const { user, getUsers } = this.props;
+    const { allUsers } = this.props;
 
-    this.allUsers();
+/*    console.log(allUsers.forEach((user) => {
+      console.log(user.firstName)
+    }));*/
 
-    console.log(getUsers);
 
     return (
 
-      user
+      allUsers
       && (
         <React.Fragment>
 
-          {/*        <article>
-          <p>{['You have finished ', <strong>{user['X'].gameCounter + user['0'].gameCounter}</strong>, ' total games']}</p>
-          <p>{['Total win games: ', <strong>{user['X'].winGames + user['0'].winGames}</strong>]}</p>
-          <p>{['Total lose games: ', <strong>{user['X'].loseGames + user['0'].loseGames}</strong>]}</p>
-          <p>{['Total draw games: ', <strong>{user['X'].drawGames + user['0'].drawGames}</strong>]}</p>
-        </article>*/}
+          <div>
+            <ReactTable
+              data={allUsers}
+              columns={[
+                {
+                  Header: "Name",
+                  columns: [
+                    {
+                      Header: "First Name",
+                      accessor: "firstName"
+                    },
+                    {
+                      Header: "Last Name",
+                      accessor: "lastName"
+                    }
+                  ]
+                },
+                {
+                  Header: "Total Info",
+                  columns: [
+                    {
+                      Header: "Wins",
+                      id: "winGames",
+                      accessor: u => u['X'].winGames + u['0'].winGames
+                    },
+                    {
+                      Header: "Loses",
+                      id: "loseGames",
+                      accessor: u => u['X'].loseGames + u['0'].loseGames
+                    },
+                    {
+                      Header: "Draws",
+                      id: "drawGames",
+                      accessor: u => u['X'].drawGames + u['0'].drawGames
+                    }
+                  ]
+                },
+                {
+                  Header: "X Info",
+                  columns: [
+                    {
+                      Header: "Wins",
+                      id: "winGames",
+                      accessor: u => u['X'].winGames
+                    },
+                    {
+                      Header: "Loses",
+                      id: "loseGames",
+                      accessor: u => u['X'].loseGames
+                    },
+                    {
+                      Header: "Draws",
+                      id: "drawGames",
+                      accessor: u => u['X'].drawGames
+                    }
+                  ]
+                },
+                {
+                  Header: "0 Info",
+                  columns: [
+                    {
+                      Header: "Wins",
+                      id: "winGames",
+                      accessor: u => u['0'].winGames
+                    },
+                    {
+                      Header: "Loses",
+                      id: "loseGames",
+                      accessor: u => u['0'].loseGames
+                    },
+                    {
+                      Header: "Draws",
+                      id: "drawGames",
+                      accessor: u => u['0'].drawGames
+                    }
+                  ]
+                }
+              ]}
+              defaultPageSize={10}
+              className="-striped -highlight"
+            />
+
+          </div>
 
         </React.Fragment>
       )
@@ -55,13 +135,13 @@ export class TableResult extends Component {
 }
 
 
-const mapState = ({ user, getUsers }) => ({
+const mapState = ({ user, allUsers }) => ({
   user,
-  getUsers
+  allUsers
 });
 
 const mapDispatch = {
-  setAllUsers
+  getAllUsers
 };
 
 export const Table = connect(mapState, mapDispatch)(TableResult);

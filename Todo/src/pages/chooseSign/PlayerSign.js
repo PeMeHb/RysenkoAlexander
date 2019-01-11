@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Popup } from '../popup';
+
 
 import './playerSign.scss';
 
@@ -9,7 +9,7 @@ export class ChooseSign extends Component {
 
     this.state = {
       signChoosed: false,
-      activatePopup: false
+    //  activatePopup: false
     };
   }
 
@@ -24,19 +24,18 @@ export class ChooseSign extends Component {
     if (this.state.signChoosed) {
       this.props.startGame(true);
     } else {
-      this.setState(currentState => ({
+/*      this.setState(currentState => ({
         activatePopup: currentState.activatePopup = true,
       }), () => {
         this.setState({
           activatePopup: false,
         });
-      });
+      });*/
     }
     event.preventDefault();
   };
 
   render() {
-    const { activatePopup } = this.state;
     return (
       <form className="your-sign" onSubmit={this.handleSubmit}>
         <h3 className="sign-text">Choose your sign</h3>
@@ -86,11 +85,7 @@ export class ChooseSign extends Component {
         >
           {'Start new game'}
         </button>
-        <Popup
-          activatePopup={activatePopup}
-          text={['You need to pick your sign first ', <b>X</b>, ' or ', <b>O</b>]}
-          delay={3000}
-        />
+
       </form>
     );
   }

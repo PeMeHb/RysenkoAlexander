@@ -54,7 +54,7 @@ const mapState = ({ user }) => ({
 });
 
 const mapDispatch = {
-  setUser
+  setUser,
 };
 
 export const App = withRouter(connect(mapState, mapDispatch)(AppComponent));

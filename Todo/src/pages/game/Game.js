@@ -54,11 +54,8 @@ export class GameMod extends Component {
   }
 
   changeCounter = (counter) => {
-
-
-
-    /*    update(counter)
-            .then(this.props.setUser(counter)); */
+        update(counter)
+            .then(this.props.setUser(counter));
   };
 
   render() {

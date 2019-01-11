@@ -10,7 +10,7 @@ export const user = (state = null, action) => {
   return state;
 };
 
-export const users = (state = [], action) => {
+export const allUsers = (state = [], action) => {
   switch (action.type) {
     case GET_ALL: {
       return action.payload;

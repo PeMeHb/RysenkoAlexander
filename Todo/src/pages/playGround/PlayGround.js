@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { Popup } from '../popup';
+import { CSSTransition } from 'react-transition-group';
 
 import './playGround.scss';
 
@@ -19,7 +18,7 @@ export class PlayGround extends Component {
       squares: Array(9).fill(null),
       isComputer: false,
       playAgain: true,
-      activatePopup: false,
+    //  activatePopup: false,
     };
   }
 
@@ -38,10 +37,10 @@ export class PlayGround extends Component {
 
     if (!playerSign || !computerSign) {
       this.popupText = ['You need to pick your sign first ', <b>X</b>, ' or ', <b>O</b>];
-      this.showPopup();
+    //  this.showPopup();
     } else if (!startGame) {
       this.popupText = 'You need to press start button';
-      this.showPopup();
+    //  this.showPopup();
     }
 
     if (isComputer || !startGame || event.target.innerHTML || this.gameFinished) return;
@@ -162,7 +161,7 @@ export class PlayGround extends Component {
       this.popupText = 'Draw';
     }
 
-    this.showPopup();
+//    this.showPopup();
 
     this.setState({
       playAgain: !this.state.playAgain,
@@ -206,7 +205,6 @@ export class PlayGround extends Component {
           this.setState(currentState => ({
             isComputer: !currentState.isComputer,
           }), () => this.checkSquares(false, true));
-
         } else {
           this.setState(currentState => ({
             isComputer: !currentState.isComputer
@@ -244,7 +242,7 @@ export class PlayGround extends Component {
             })); */
   };
 
-  showPopup = () => {
+/*  showPopup = () => {
     this.setState(currentState => ({
       activatePopup: currentState.activatePopup = true,
     }), () => {
@@ -252,24 +250,30 @@ export class PlayGround extends Component {
         activatePopup: false,
       });
     });
-  };
+  };*/
 
   render() {
 
-    const { squares, playAgain, activatePopup } = this.state;
+    const { squares, playAgain } = this.state;
 
     return (
       <div className="playGround">
 
-        <ReactCSSTransitionGroup
-          component="ul"
+        <CSSTransition
+       /*   component="ul"
           transitionName="signBox"
-          className="ground"
-          transitionAppear={true}
-          transitionAppearTimeout={500}
-          transitionEnter={false}
-          transitionLeave={false}
+          className="ground"*/
+          timeout={300}
+          classNames="ground"
+          unmountOnExit
+/*          onExited={() => {
+            this.setState({
+              showValidationButton: true,
+            });
+          }}*/
         >
+
+
           {
             squares.map((box, boxIndex) => {
               return (
@@ -285,7 +289,7 @@ export class PlayGround extends Component {
               );
             })
           }
-        </ReactCSSTransitionGroup>
+        </CSSTransition>
         <button
           type="button"
           className="butt"
@@ -294,11 +298,7 @@ export class PlayGround extends Component {
         >
           {'Play again'}
         </button>
-        <Popup
-          activatePopup={activatePopup}
-          text={this.popupText}
-          delay={3000}
-        />
+
       </div>
     );
   }

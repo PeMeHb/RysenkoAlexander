@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+// import { CSSTransitionGroup } from 'react-transition-group'
+import Modal from 'react-responsive-modal';
 
-import './main.scss';
+import styles from './main.scss';
 
 export class MainComponent extends Component {
   constructor(props) {
     super(props);
-    /*    this.state = {
-          openModal: false
-        }; */
+    this.state = {
+      open: false
+    };
   }
 
   componentDidMount() {
@@ -18,9 +20,18 @@ export class MainComponent extends Component {
           .then(this.props.addGame); */
   }
 
-  /*  updateModal(isOpen) {
+/*    updateModal(isOpen) {
       this.setState({ openModal: isOpen });
-    } */
+    }*/
+
+  onOpenModal = () => {
+    this.setState({ open: true });
+  };
+
+  onCloseModal = () => {
+    this.setState({ open: false });
+  };
+
 
   render() {
     const { user } = this.props;
@@ -41,18 +52,19 @@ export class MainComponent extends Component {
             </article>
           )
         }
-
-        {/*        <ReactModal
-          isOpen={this.state.openModal}
-          contentLabel="Minimal Modal Example"
-          shouldCloseOnEsc={true}
-          shouldCloseOnOverlayClick={true}
-          shouldReturnFocusAfterClose={true}
-          ariaHideApp={false}
+        <button
+          onClick={this.onOpenModal}
         >
-          <p>Hello</p>
-          <button onClick={() => this.updateModal(false)}>Close</button>
-        </ReactModal> */}
+          {['Hello']}
+        </button>
+
+        <Modal
+          open={this.state.open}
+          onClose={this.onCloseModal}
+          center
+        >
+          <h2>Hello</h2>
+        </Modal>
 
       </React.Fragment>
     );
