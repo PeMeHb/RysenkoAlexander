@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { CSSTransition } from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { Popup } from '../../pages/modal';
 
 import './playGround.scss';
 
@@ -18,7 +19,8 @@ export class PlayGround extends Component {
       squares: Array(9).fill(null),
       isComputer: false,
       playAgain: true,
-    //  activatePopup: false,
+      activatePopup: false,
+      in: false
     };
   }
 
@@ -37,10 +39,10 @@ export class PlayGround extends Component {
 
     if (!playerSign || !computerSign) {
       this.popupText = ['You need to pick your sign first ', <b>X</b>, ' or ', <b>O</b>];
-    //  this.showPopup();
+      this.showPopup();
     } else if (!startGame) {
       this.popupText = 'You need to press start button';
-    //  this.showPopup();
+      this.showPopup();
     }
 
     if (isComputer || !startGame || event.target.innerHTML || this.gameFinished) return;
@@ -155,13 +157,15 @@ export class PlayGround extends Component {
 
     if (player === 'computer') {
       this.popupText = 'Computer win';
+      this.updateCounter('c win');
     } else if (player === 'player') {
       this.popupText = `${user.firstName} win`;
+      this.updateCounter('p win');
     } else {
       this.popupText = 'Draw';
     }
 
-//    this.showPopup();
+    this.showPopup();
 
     this.setState({
       playAgain: !this.state.playAgain,
@@ -175,20 +179,27 @@ export class PlayGround extends Component {
 
     /* X:{gameCounter: user['X'].gameCounter + 1} */
 
-    const newCounter = { ...user, gameCounter: user['X'].gameCounter + 1 };
+
+
+    this.gameFinished = true;
+  };
+
+
+  updateCounter = (info) => {
+
+    const newCounter = { ...user, X:{...user['X'], gameCounter: user['X'].gameCounter + 1, winGames: user['X'].winGames + 1}};
 
     console.log(newCounter);
 
     this.props.changeCounter(newCounter);
 
-    this.gameFinished = true;
   };
 
   playAgain = () => {
     const { computerSign } = this.props;
     this.gameFinished = false;
     this.cellRefs.map((item) => {
-      item.classList.remove('signBox-appear-active');
+      item.classList.remove('signBox-enter-active');
     });
 
     this.setState(currentState => ({
@@ -216,9 +227,23 @@ export class PlayGround extends Component {
     let i = 0,
       length = squares.length;
     squares.forEach((item, index) => {
-      if (item && !this.cellRefs[index].classList.contains('signBox-appear-active')) {
-        this.cellRefs[index].className += ' signBox-appear-active';
+      if (item && !this.cellRefs[index].classList.contains('signBox-enter-active')) {
+         this.cellRefs[index].className += ' signBox-enter-active';
+
+        /*        this.setState(currentState => ({
+                  in: currentState.in = true,
+                }));*/
+
+/*        this.setState(currentState => ({
+          in: currentState.in = true,
+        }), () => {
+          this.setState({
+            in: false,
+          });
+        });*/
+
       }
+
       if (item) {
         i++;
         if (i === length) {
@@ -236,13 +261,13 @@ export class PlayGround extends Component {
       isComputer: this.state.isComputer = !this.state.isComputer
     });
 
-    /*        this.setState(currentState => ({
+    /*      this.setState(currentState => ({
               squares: currentState.squares = squares,
               isComputer: currentState.isComputer = !this.state.isComputer,
             })); */
   };
 
-/*  showPopup = () => {
+  showPopup = () => {
     this.setState(currentState => ({
       activatePopup: currentState.activatePopup = true,
     }), () => {
@@ -250,7 +275,7 @@ export class PlayGround extends Component {
         activatePopup: false,
       });
     });
-  };*/
+  };
 
   render() {
 
@@ -258,22 +283,7 @@ export class PlayGround extends Component {
 
     return (
       <div className="playGround">
-
-        <CSSTransition
-       /*   component="ul"
-          transitionName="signBox"
-          className="ground"*/
-          timeout={300}
-          classNames="ground"
-          unmountOnExit
-/*          onExited={() => {
-            this.setState({
-              showValidationButton: true,
-            });
-          }}*/
-        >
-
-
+          <ul className="ground">
           {
             squares.map((box, boxIndex) => {
               return (
@@ -285,11 +295,21 @@ export class PlayGround extends Component {
                   onClick={this.onClick}
                 >
                   {box}
+{/*                  <CSSTransition
+                    in={this.state.in}
+                  //  key={boxIndex + 10}
+                    timeout={500}
+                    classNames="signBox"
+                  >
+                  <span>{box}</span>
+                  </CSSTransition>*/}
+
                 </li>
               );
             })
           }
-        </CSSTransition>
+          </ul>
+
         <button
           type="button"
           className="butt"
@@ -298,6 +318,8 @@ export class PlayGround extends Component {
         >
           {'Play again'}
         </button>
+
+        <Popup activatePopup={this.state.activatePopup} text={this.popupText} />
 
       </div>
     );

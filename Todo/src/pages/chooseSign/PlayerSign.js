@@ -24,13 +24,13 @@ export class ChooseSign extends Component {
     if (this.state.signChoosed) {
       this.props.startGame(true);
     } else {
-/*      this.setState(currentState => ({
-        activatePopup: currentState.activatePopup = true,
-      }), () => {
-        this.setState({
-          activatePopup: false,
-        });
-      });*/
+        this.setState(currentState => ({
+      activatePopup: currentState.activatePopup = true,
+    }), () => {
+      this.setState({
+        activatePopup: false,
+      });
+    });
     }
     event.preventDefault();
   };
@@ -77,7 +77,7 @@ export class ChooseSign extends Component {
           </label>
         </div>
         <h4 className="sign-text">
-          {[<b>X</b>, ' - always go first']}
+          {[<b key={"0010101"}>X</b>, ' - always go first']}
         </h4>
         <button
           type="submit"

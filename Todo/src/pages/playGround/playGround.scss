@@ -15,16 +15,24 @@
     box-sizing: border-box;
     height: 60px;
     background-color: #fff;
-    color: #fff;
   //  color: #000;
     font-size: 1.1rem;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: color 500ms ease-in;
-    &.signBox-appear-active {
+    > span {
+      color: #fff;
+      transition: color 500ms ease-in;
+      &.signBox-enter-active, &.signBox-enter-done {
+        color: #000;
+      }
+    }
+
+    &.signBox-enter-active {
       color: #000;
     }
+
   }
 
 }

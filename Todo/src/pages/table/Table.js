@@ -20,33 +20,20 @@ export class TableResult extends Component {
         .then(this.props.getAllUsers);
     }
 
-  setAllUsers = () => {
-    const { allUsers } = this.props;
-    console.log(allUsers);
-    /*    users.forEach((user) => {
-          delete user.sid;
-          delete user.password;
-          console.log(user)
-        });*/
-  };
 
   render() {
     const { allUsers } = this.props;
 
-/*    console.log(allUsers.forEach((user) => {
-      console.log(user.firstName)
-    }));*/
-
-
     return (
 
-      allUsers
+      allUsers.length > 0
       && (
         <React.Fragment>
 
           <div>
             <ReactTable
               data={allUsers}
+              resolveData={data => data.map(row => row)}
               columns={[
                 {
                   Header: "Name",
@@ -86,18 +73,15 @@ export class TableResult extends Component {
                   columns: [
                     {
                       Header: "Wins",
-                      id: "winGames",
-                      accessor: u => u['X'].winGames
+                      accessor: "X.winGames"
                     },
                     {
                       Header: "Loses",
-                      id: "loseGames",
-                      accessor: u => u['X'].loseGames
+                      accessor: "X.loseGames"
                     },
                     {
                       Header: "Draws",
-                      id: "drawGames",
-                      accessor: u => u['X'].drawGames
+                      accessor: "X.drawGames"
                     }
                   ]
                 },
@@ -106,18 +90,15 @@ export class TableResult extends Component {
                   columns: [
                     {
                       Header: "Wins",
-                      id: "winGames",
-                      accessor: u => u['0'].winGames
+                      accessor: "0.winGames"
                     },
                     {
                       Header: "Loses",
-                      id: "loseGames",
-                      accessor: u => u['0'].loseGames
+                      accessor: "0.loseGames"
                     },
                     {
                       Header: "Draws",
-                      id: "drawGames",
-                      accessor: u => u['0'].drawGames
+                      accessor: "0.drawGames"
                     }
                   ]
                 }
