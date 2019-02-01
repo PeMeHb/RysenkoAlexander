@@ -25,7 +25,6 @@ export class TableResult extends Component {
     const { allUsers } = this.props;
 
     return (
-
       allUsers.length > 0
       && (
         <React.Fragment>
@@ -33,72 +32,72 @@ export class TableResult extends Component {
           <div>
             <ReactTable
               data={allUsers}
-              resolveData={data => data.map(row => row)}
+             /* resolveData={data => data.map(row => row)} */
               columns={[
                 {
-                  Header: "Name",
+                  Header: 'Name',
                   columns: [
                     {
-                      Header: "First Name",
-                      accessor: "firstName"
+                      Header: 'First Name',
+                      accessor: 'firstName'
                     },
                     {
-                      Header: "Last Name",
-                      accessor: "lastName"
+                      Header: 'Last Name',
+                      accessor: 'lastName'
                     }
                   ]
                 },
                 {
-                  Header: "Total Info",
+                  Header: 'Total Info',
                   columns: [
                     {
-                      Header: "Wins",
-                      id: "winGames",
-                      accessor: u => u['X'].winGames + u['0'].winGames
+                      Header: 'Wins',
+                      id: 'winGames',
+                      accessor: u => u.X.winGames + u.O.winGames
                     },
                     {
-                      Header: "Loses",
-                      id: "loseGames",
-                      accessor: u => u['X'].loseGames + u['0'].loseGames
+                      Header: 'Loses',
+                      id: 'loseGames',
+                      accessor: u => u.X.loseGames + u.O.loseGames
                     },
                     {
-                      Header: "Draws",
-                      id: "drawGames",
-                      accessor: u => u['X'].drawGames + u['0'].drawGames
+                      Header: 'Draws',
+                      id: 'drawGames',
+                      accessor: u => u.X.drawGames + u.O.drawGames
                     }
                   ]
                 },
                 {
-                  Header: "X Info",
+                  Header: 'X Info',
                   columns: [
                     {
-                      Header: "Wins",
-                      accessor: "X.winGames"
+                      Header: 'Wins',
+                      accessor: 'X.winGames'
                     },
                     {
-                      Header: "Loses",
-                      accessor: "X.loseGames"
+                      Header: 'Loses',
+                      accessor: 'X.loseGames'
                     },
                     {
-                      Header: "Draws",
-                      accessor: "X.drawGames"
+                      Header: 'Draws',
+                      accessor: 'X.drawGames'
                     }
                   ]
                 },
                 {
-                  Header: "0 Info",
+                  Header: 'O Info',
                   columns: [
                     {
-                      Header: "Wins",
-                      accessor: "0.winGames"
+                      Header: 'Wins',
+                      accessor: 'O.winGames'
                     },
                     {
-                      Header: "Loses",
-                      accessor: "0.loseGames"
+                      Header: 'Loses',
+                      accessor: 'O.loseGames'
                     },
                     {
-                      Header: "Draws",
-                      accessor: "0.drawGames"
+                      Header: 'Draws',
+                      accessor: 'O.drawGames'
                     }
                   ]
                 }

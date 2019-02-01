@@ -14,8 +14,6 @@ export const allUsers = (state = [], action) => {
   switch (action.type) {
     case GET_ALL: {
       return action.payload;
-/*      return Object.assign(state, {...action.payload});*/
-/*      return Object.assign(...state, { ...action.payload });*/
     }
   }
 

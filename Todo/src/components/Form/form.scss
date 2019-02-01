@@ -1,6 +1,12 @@
 .form {
   margin-bottom: 20px;
 
+  input:not([type="submit"]) {
+    padding: 5px;
+    border: 0;
+    margin-right: 10px;
+  }
+
   input.error {
     box-shadow: 0 0 5px red;
   }

@@ -73,9 +73,9 @@ export class Form extends Component {
         }
       });
 
-    if (!data['X'] || !data['0']) {
-      data['X'] = gameFields;
-      data['0'] = gameFields;
+    if (!data.X || !data.O) {
+      data.X = gameFields;
+      data.O = gameFields;
     }
 
     this.props.submit(data);

@@ -20,16 +20,38 @@ export class PlayGround extends Component {
       isComputer: false,
       playAgain: true,
       activatePopup: false,
-      in: false
     };
   }
 
   componentDidUpdate(prevProps) {
     const { startGame, computerSign } = this.props;
-    if (prevProps.startGame !== startGame && computerSign === 'X') {
+    if (startGame && startGame !== prevProps.startGame && computerSign === 'X') {
+      console.log(startGame);
       this.setState(currentState => ({
-        isComputer: !currentState.isComputer,
+        isComputer: currentState.isComputer = true,
       }), () => this.checkSquares(false, true));
+    }
+    if (computerSign !== prevProps.computerSign && computerSign !== null) {
+      console.log(computerSign);
+
+      this.gameFinished = false;
+
+      this.cellRefs.map((item) => {
+        item.classList.remove('signBox-enter-active');
+      });
+
+      this.setState(currentState => ({
+        isComputer: computerSign === 'X' ? currentState.isComputer = true : currentState.isComputer = false,
+        playAgain: currentState.playAgain = true,
+        squares: currentState.squares = Array(9).fill(null)
+      }));
+
+/*      this.setState(currentState => ({
+        isComputer: currentState.isComputer = false,
+        squares: currentState.squares = Array(9).fill(null)
+      }));
+      */
+
     }
   }
 
@@ -38,7 +60,7 @@ export class PlayGround extends Component {
       { playerSign, computerSign, startGame } = this.props;
 
     if (!playerSign || !computerSign) {
-      this.popupText = ['You need to pick your sign first ', <b>X</b>, ' or ', <b>O</b>];
+      this.popupText = ['You need to pick your sign first ', <b key={'020102'}>X</b>, ' or ', <b key={'030201'}>O</b>];
       this.showPopup();
     } else if (!startGame) {
       this.popupText = 'You need to press start button';
@@ -50,9 +72,6 @@ export class PlayGround extends Component {
     this.setSquares(squares);
     this.checkSquares(true);
     this.checkSquares(false, true);
-    /*    setTimeout( () => {
-          this.checkSquares(false, true);
-        }, 0); */
   };
 
   randomCorner = () => {
@@ -153,16 +172,18 @@ export class PlayGround extends Component {
   };
 
   winGame = (player) => {
-    const { user } = this.props;
+    const { user, playerSign } = this.props;
+    const sign = playerSign === 'X' ? 'X' : 'O';
 
     if (player === 'computer') {
       this.popupText = 'Computer win';
-      this.updateCounter('c win');
+      this.updateCounter(`p ${sign} lose`);
     } else if (player === 'player') {
       this.popupText = `${user.firstName} win`;
-      this.updateCounter('p win');
+      this.updateCounter(`p ${sign} win`);
     } else {
       this.popupText = 'Draw';
+      this.updateCounter(`p ${sign} draw`);
     }
 
     this.showPopup();
@@ -171,25 +192,52 @@ export class PlayGround extends Component {
       playAgain: !this.state.playAgain,
     });
 
-    /*    this.setState(currentState => ({
-          playAgain: !currentState.playAgain,
-        })); */
-
-    //  let newCounter = {...user, counter: gameCounter.counter + 1};
-
-    /* X:{gameCounter: user['X'].gameCounter + 1} */
-
-
-
     this.gameFinished = true;
   };
 
 
   updateCounter = (info) => {
+    const { user } = this.props;
+    let newCounter = {};
 
-    const newCounter = { ...user, X:{...user['X'], gameCounter: user['X'].gameCounter + 1, winGames: user['X'].winGames + 1}};
-
-    console.log(newCounter);
+    switch (info) {
+      case 'p X win':
+        newCounter = {
+          ...user,
+          X: { ...user.X, gameCounter: user.X.gameCounter + 1, winGames: user.X.winGames + 1 } };
+        break;
+      case 'p X lose':
+        newCounter = {
+          ...user,
+          X: { ...user.X, gameCounter: user.X.gameCounter + 1, loseGames: user.X.loseGames + 1 }
+        };
+        break;
+      case 'p X draw':
+        newCounter = {
+          ...user,
+          X: { ...user.X, gameCounter: user.X.gameCounter + 1, drawGames: user.X.drawGames + 1 }
+        };
+        break;
+      case 'p O win':
+        newCounter = {
+          ...user,
+          O: { ...user.O, gameCounter: user.O.gameCounter + 1, winGames: user.O.winGames + 1 } };
+        break;
+      case 'p O lose':
+        newCounter = {
+          ...user,
+          O: { ...user.O, gameCounter: user.O.gameCounter + 1, loseGames: user.O.loseGames + 1 }
+        };
+        break;
+      case 'p O draw':
+        newCounter = {
+          ...user,
+          O: { ...user.O, gameCounter: user.O.gameCounter + 1, drawGames: user.O.drawGames + 1 }
+        };
+        break;
+      default:
+        console.log('Error');
+    }
 
     this.props.changeCounter(newCounter);
 
@@ -201,9 +249,8 @@ export class PlayGround extends Component {
     this.cellRefs.map((item) => {
       item.classList.remove('signBox-enter-active');
     });
-
     this.setState(currentState => ({
-      isComputer: !currentState.isComputer,
+      isComputer: computerSign === 'X' ? currentState.isComputer = true : currentState.isComputer = false,
       playAgain: !currentState.playAgain,
       squares: currentState.squares = Array(9).fill(null)
     }), () => {
@@ -228,19 +275,19 @@ export class PlayGround extends Component {
       length = squares.length;
     squares.forEach((item, index) => {
       if (item && !this.cellRefs[index].classList.contains('signBox-enter-active')) {
-         this.cellRefs[index].className += ' signBox-enter-active';
+        this.cellRefs[index].className += ' signBox-enter-active';
 
         /*        this.setState(currentState => ({
                   in: currentState.in = true,
                 }));*/
 
-/*        this.setState(currentState => ({
-          in: currentState.in = true,
-        }), () => {
-          this.setState({
-            in: false,
-          });
-        });*/
+        /*        this.setState(currentState => ({
+                  in: currentState.in = true,
+                }), () => {
+                  this.setState({
+                    in: false,
+                  });
+                });*/
 
       }
 
@@ -283,7 +330,7 @@ export class PlayGround extends Component {
 
     return (
       <div className="playGround">
-          <ul className="ground">
+        <ul className="ground">
           {
             squares.map((box, boxIndex) => {
               return (
@@ -295,7 +342,7 @@ export class PlayGround extends Component {
                   onClick={this.onClick}
                 >
                   {box}
-{/*                  <CSSTransition
+                  {/*                  <CSSTransition
                     in={this.state.in}
                   //  key={boxIndex + 10}
                     timeout={500}
@@ -308,18 +355,18 @@ export class PlayGround extends Component {
               );
             })
           }
-          </ul>
+        </ul>
 
         <button
           type="button"
-          className="butt"
+          className="butt start-button"
           disabled={playAgain}
           onClick={this.playAgain}
         >
           {'Play again'}
         </button>
 
-        <Popup activatePopup={this.state.activatePopup} text={this.popupText} />
+        <Popup activatePopup={this.state.activatePopup} text={this.popupText}/>
 
       </div>
     );

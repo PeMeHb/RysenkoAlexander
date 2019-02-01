@@ -68,10 +68,10 @@ export class GameMod extends Component {
         <section className="section">
           <h1 className="section__title">{user.firstName}</h1>
           <article>
-            <p>You have finished <strong>{user['X'].gameCounter + user['0'].gameCounter}</strong> total games</p>
-            <p>Total win games: <strong>{user['X'].winGames + user['0'].winGames}</strong></p>
-            <p>Total lose games: <strong>{user['X'].loseGames + user['0'].loseGames}</strong></p>
-            <p>Total draw games: <strong>{user['X'].drawGames + user['0'].drawGames}</strong></p>
+            <p>You have finished <strong>{user.X.gameCounter + user.O.gameCounter}</strong> total games</p>
+            <p>Total win games: <strong>{user.X.winGames + user.O.winGames}</strong></p>
+            <p>Total lose games: <strong>{user.X.loseGames + user.O.loseGames}</strong></p>
+            <p>Total draw games: <strong>{user.X.drawGames + user.O.drawGames}</strong></p>
           </article>
           <ChooseSign playerSign={this.chooseSign} startGame={this.startGame} />
           <PlayGround

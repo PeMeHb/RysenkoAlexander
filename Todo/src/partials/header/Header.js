@@ -17,7 +17,15 @@ export const Header = ({ user, setLoginState }) => {
     <header className="header">
       <Link to="/"><img src="images/logo.png" alt="todo" /></Link>
       <Navigation user={user} />
-      {user && <button onClick={onLogout}>Logout</button>}
+      {
+        user &&
+      <button
+        className="start-button"
+        onClick={onLogout}
+      >
+        Logout
+      </button>
+      }
     </header>
   );
 };

@@ -1,10 +1,10 @@
 .playGround {
-  margin: 0 auto;
 
   .ground {
     max-width: 200px;
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 10px;
   }
 
   .cell {
