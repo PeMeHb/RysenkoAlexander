@@ -32,7 +32,6 @@ module.exports = (app) => {
   _.get('/users/:id', users.getById);
   _.post('/public/user', users.create);
   _.put('/user', users.update);
- // _.get('/users', users.getUsers);
 
   createCommonRoutes({ routeController: users, name: 'users' });
 

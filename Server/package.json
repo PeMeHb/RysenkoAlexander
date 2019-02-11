@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "A simple Koajs 2 REST Application",
   "author": {
-    "name": "Ilia Tsymbal",
-    "email": "iliatcymbal@gmail.com"
+    "name": "Rysenko Alexander",
+    "email": "rysenkoalexander@gmail.com"
   },
   "dependencies": {
     "babel-eslint": "^8.2.5",

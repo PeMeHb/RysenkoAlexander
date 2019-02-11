@@ -1,7 +1,7 @@
 const Controller = require('./controller');
 const db = require('../db');
 
-const fields = ['email', 'firstName', 'lastName', 'password', 'id', 'sid', 'X', '0'];
+const fields = ['email', 'firstName', 'lastName', 'password', 'id', 'sid', 'X', 'O'];
 
 class User extends Controller {
   constructor(name) {
@@ -9,9 +9,7 @@ class User extends Controller {
 
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
-    this.getUsers = this.getUsers.bind(this);
-    /*    this.getCounter = this.getCounter.bind(this);
-        this.updateCount = this.updateCount.bind(this);*/
+    this.get = this.get.bind(this);
 
   }
 
@@ -56,59 +54,18 @@ class User extends Controller {
     await next();
   }
 
-  async getUsers(ctx, next) {
-    const users = await db.get('users');
+  async get(ctx, next) {
+    const AllUsers = await db.get('users');
 
-    console.log(users);
-
-/*    users.forEach((user) => {
+    AllUsers.forEach((user) => {
       delete user.sid;
       delete user.password;
-    });*/
+    });
 
-    ctx.body = users;
+    ctx.body = AllUsers;
 
     await next();
   }
-
-  /*  async getCounter(ctx) {
-      const gameData = await this.getValue();
-      const cookie = ctx.cookies.get('ECSID');
-      try {
-        const user = gameData.find(item => item.sid && cookie === item.sid);
-
-        if (user) {
-          delete user.sid;
-          delete user.password;
-          ctx.body = user;
-        } else {
-          ctx.status = 404;
-          ctx.body = { error: 'User is not authenticated' };
-        }
-      } catch (e) {
-        console.log('Error get user', e);
-      }
-    }
-
-    async updateCount(ctx, next) {
-      const oldCounts = await this.getValue();
-      const newCount = ctx.request.body;
-      const cookie = ctx.cookies.get('ECSID');
-      try {
-        const userCount = oldCounts.find(item => item.sid && cookie === item.sid);
-        if (userCount) {
-          Object.assign(userCount, newCount);
-          ctx.body = await db.write(this.name, oldCounts);
-        } else {
-          ctx.status = 404;
-          ctx.body = { error: 'User is not authenticated' };
-        }
-      } catch (e) {
-        console.log('Error get user', e);
-      }
-
-      await next();
-    }*/
 
   clearUser(user = {}) {
     Object.keys(user).forEach((key) => {
