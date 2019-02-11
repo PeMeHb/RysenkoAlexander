@@ -6,9 +6,7 @@ import "react-table/react-table.css";
 import { getUsers } from "../../services/userService";
 import { getAllUsers, allUsers } from '../../store';
 
-
 import './table.scss';
-
 
 export class TableResult extends Component {
   constructor(props) {
@@ -32,7 +30,6 @@ export class TableResult extends Component {
           <div>
             <ReactTable
               data={allUsers}
-             /* resolveData={data => data.map(row => row)} */
               columns={[
                 {
                   Header: 'Name',
@@ -115,8 +112,7 @@ export class TableResult extends Component {
 }
 
 
-const mapState = ({ user, allUsers }) => ({
-  user,
+const mapState = ({ allUsers }) => ({
   allUsers
 });
 

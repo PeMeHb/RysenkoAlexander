@@ -12,9 +12,18 @@
     margin: 0 15px 0 0;
     text-decoration: none;
     outline: none;
-
     &:hover {
       text-decoration: underline;
     }
   }
+
+  &-logo {
+    max-width: 60px;
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+  }
+
+
 }

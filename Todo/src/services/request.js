@@ -13,6 +13,7 @@ export const request = (url = '', type = 'get', obj = null) => {
   return $.ajax({
     type,
     url: `${BASE_URL}${url}`,
+    crossDomain: true,
     data,
     contentType,
     xhrFields: {

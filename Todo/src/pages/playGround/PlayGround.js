@@ -26,39 +26,26 @@ export class PlayGround extends Component {
   componentDidUpdate(prevProps) {
     const { startGame, computerSign } = this.props;
     if (startGame && startGame !== prevProps.startGame && computerSign === 'X') {
-      console.log(startGame);
       this.setState(currentState => ({
         isComputer: currentState.isComputer = true,
       }), () => this.checkSquares(false, true));
     }
     if (computerSign !== prevProps.computerSign && computerSign !== null) {
-      console.log(computerSign);
-
       this.gameFinished = false;
-
       this.cellRefs.map((item) => {
         item.classList.remove('signBox-enter-active');
       });
-
       this.setState(currentState => ({
         isComputer: computerSign === 'X' ? currentState.isComputer = true : currentState.isComputer = false,
         playAgain: currentState.playAgain = true,
         squares: currentState.squares = Array(9).fill(null)
       }));
-
-/*      this.setState(currentState => ({
-        isComputer: currentState.isComputer = false,
-        squares: currentState.squares = Array(9).fill(null)
-      }));
-      */
-
     }
   }
 
   onClick = (event) => {
     const { squares, isComputer } = this.state,
       { playerSign, computerSign, startGame } = this.props;
-
     if (!playerSign || !computerSign) {
       this.popupText = ['You need to pick your sign first ', <b key={'020102'}>X</b>, ' or ', <b key={'030201'}>O</b>];
       this.showPopup();
@@ -66,7 +53,6 @@ export class PlayGround extends Component {
       this.popupText = 'You need to press start button';
       this.showPopup();
     }
-
     if (isComputer || !startGame || event.target.innerHTML || this.gameFinished) return;
     squares[event.target.id] = playerSign;
     this.setSquares(squares);
@@ -90,7 +76,6 @@ export class PlayGround extends Component {
 
   checkSquares = (player, attack, defence) => {
     if (this.gameFinished) return;
-
     const squares = this.state.squares.slice(),
       length = squares.length,
       middle = (length - 1) / 2,
@@ -107,16 +92,13 @@ export class PlayGround extends Component {
         [2, 4, 6],
       ],
       lineLength = lines.length;
-
     if (!squares[middle] && attack) {
       squares[middle] = computerSign;
       this.setSquares(squares);
       return;
     }
-
     for (let i = 0; i < lineLength; ++i) {
       const [a, b, c] = lines[i];
-
       if (attack) {
         if (squares[a] === computerSign && squares[b] === computerSign && !squares[c]) {
           squares[c] = computerSign;
@@ -140,7 +122,6 @@ export class PlayGround extends Component {
           this.checkSquares(false, false, true);
         }
       }
-
       if (defence) {
         if (squares[a] === playerSign && squares[b] === playerSign && !squares[c]) {
           squares[c] = computerSign;
@@ -161,7 +142,6 @@ export class PlayGround extends Component {
           this.randomCorner();
         }
       }
-
       if (player) {
         if (squares[a] === playerSign && squares[b] === playerSign && squares[c] === playerSign) {
           this.winGame('player');
@@ -174,7 +154,6 @@ export class PlayGround extends Component {
   winGame = (player) => {
     const { user, playerSign } = this.props;
     const sign = playerSign === 'X' ? 'X' : 'O';
-
     if (player === 'computer') {
       this.popupText = 'Computer win';
       this.updateCounter(`p ${sign} lose`);
@@ -185,21 +164,16 @@ export class PlayGround extends Component {
       this.popupText = 'Draw';
       this.updateCounter(`p ${sign} draw`);
     }
-
     this.showPopup();
-
     this.setState({
       playAgain: !this.state.playAgain,
     });
-
     this.gameFinished = true;
   };
-
 
   updateCounter = (info) => {
     const { user } = this.props;
     let newCounter = {};
-
     switch (info) {
       case 'p X win':
         newCounter = {
@@ -238,9 +212,7 @@ export class PlayGround extends Component {
       default:
         console.log('Error');
     }
-
     this.props.changeCounter(newCounter);
-
   };
 
   playAgain = () => {
@@ -258,16 +230,6 @@ export class PlayGround extends Component {
         this.checkSquares(false, true);
       }
     });
-
-    /*
-          this.setState(currentState => ({
-            isComputer: !currentState.isComputer,
-          }), () => this.checkSquares(false, true));
-        } else {
-          this.setState(currentState => ({
-            isComputer: !currentState.isComputer
-          }));
-        } */
   };
 
   setSquares = (squares) => {
@@ -276,21 +238,7 @@ export class PlayGround extends Component {
     squares.forEach((item, index) => {
       if (item && !this.cellRefs[index].classList.contains('signBox-enter-active')) {
         this.cellRefs[index].className += ' signBox-enter-active';
-
-        /*        this.setState(currentState => ({
-                  in: currentState.in = true,
-                }));*/
-
-        /*        this.setState(currentState => ({
-                  in: currentState.in = true,
-                }), () => {
-                  this.setState({
-                    in: false,
-                  });
-                });*/
-
       }
-
       if (item) {
         i++;
         if (i === length) {
@@ -302,16 +250,10 @@ export class PlayGround extends Component {
         }
       }
     });
-
     this.setState({
       squares,
       isComputer: this.state.isComputer = !this.state.isComputer
     });
-
-    /*      this.setState(currentState => ({
-              squares: currentState.squares = squares,
-              isComputer: currentState.isComputer = !this.state.isComputer,
-            })); */
   };
 
   showPopup = () => {

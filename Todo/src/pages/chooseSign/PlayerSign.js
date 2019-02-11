@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-
+import { Popup } from "../modal";
 
 import './playerSign.scss';
-import { Popup } from "../modal";
 
 export class ChooseSign extends Component {
   constructor(props) {
@@ -16,15 +15,12 @@ export class ChooseSign extends Component {
   }
 
   handleClick = (event) => {
-
     if (this.state.buttonDisable) {
       this.props.startGame(false);
-      console.log('01');
       this.setState(currentState => ({
         buttonDisable: currentState.buttonDisable = false,
       }));
     } else {
- //     this.props.playerSign(event.target.value);
       this.setState({
         signChoosed: true,
         buttonDisable: false,
@@ -34,7 +30,6 @@ export class ChooseSign extends Component {
   };
 
   handleSubmit = (event) => {
-
     if (this.state.signChoosed) {
       this.props.startGame(true);
       this.setState(currentState => ({

@@ -1,13 +1,14 @@
 import React from 'react';
 
 import { Form } from '../../components/Form';
-import { create } from '../../services/userService';
+import { create, login } from '../../services/userService';
 
 export const CreateUser = (props) => {
   const userHandler = (data) => {
     create(data).then(() => {
-      props.setLoginState();
-      //  props.history.push('/success');
+      props.setLoginState(data);
+      login(data);
+      props.history.push('/login');
     });
   };
 
